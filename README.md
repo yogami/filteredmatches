@@ -9,10 +9,14 @@ Then navigate to the location of the pom.xml and run
 
 Once the filtered matches jar file is created then run the command
 
-# mvn exec:java
+# mvn exec:java -Dstart
 
-This should start the embedded jetty server.
+This should start the app
 
 Navigate to the url # <your_server_url>:8080/matches/caroline (eg: http://localhost:8080/matches/caroline)
 
 and the matches page should load.
+
+# mvn exec:java -Dstop 
+
+from another window should stop the app
