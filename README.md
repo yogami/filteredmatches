@@ -9,7 +9,7 @@ Then navigate to the location of the pom.xml and run
 
 Once the filtered matches jar file is created then run the command
 
-# mvn exec:java -Dstart
+# mvn exec:java -Dexec.args="start"
 
 This should start the app
 
@@ -17,6 +17,6 @@ Navigate to the url # <your_server_url>:8080/matches/caroline (eg: http://localh
 
 and the matches page should load.
 
-# mvn exec:java -Dstop 
+# Cntrl C
 
-from another window should stop the app
+on that window should stop the server
