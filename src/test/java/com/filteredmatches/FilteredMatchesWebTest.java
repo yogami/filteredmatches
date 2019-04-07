@@ -24,7 +24,7 @@ public class FilteredMatchesWebTest {
 	}
 
 	@Test
-	public void shouldReturnBlah() {
+	public void shouldReturnMatchesPage() {
 		WebDriver client = new HtmlUnitDriver();
 		client.get(jettyServer.getServerURI().toString() + MATCHES_URL + USER);
 		String pageSource = client.getPageSource();

@@ -19,23 +19,7 @@ public class EmbeddedJettyServer {
 
 	private Server server;
 
-	public static void main(String[] args) {
-		EmbeddedJettyServer thisServer = new EmbeddedJettyServer();
-		try {
-			if (args.length > 0) {
-				if (args[0].equals("start")) {
-					thisServer.startServer();
-				} else if (args[0].equals("stop")) {
-					thisServer.stopServer();
-				} else {
-					// log or system out the message that user can either enter
-					// start or stop only
-				}
-			}
-		} catch (Exception e) {
-
-		}
-	}
+	
 
 	public void startServer() throws Exception {
 		server = new Server(PORT);
