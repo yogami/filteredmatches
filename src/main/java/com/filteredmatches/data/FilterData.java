@@ -35,9 +35,9 @@ public class FilterData {
 
 	private Connection con;
 
-	public FilterData(ConnectionPool cpool) {
+	public FilterData() {
 		try {
-			con = cpool.getConnection();
+			con = ConnectionPool.getInstance().getConnection();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

@@ -13,8 +13,8 @@ import com.filteredmatches.model.User;
 
 public class LoadDataTest {
 
-	ConnectionPool connectionPool = new ConnectionPool();
-	LoadData loadData = new LoadData(connectionPool);
+	
+	LoadData loadData = new LoadData();
 
 	private String jsonDataFromFile = "";
 	private static final String JSON_FILE_NAME = "users.json";

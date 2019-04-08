@@ -6,26 +6,31 @@ import static org.junit.Assert.assertTrue;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.filteredmatches.model.User;
 
 public class FilterDataTest {
 
-	ConnectionPool connectionPool = new ConnectionPool();
-	LoadData loadData = new LoadData(connectionPool);
-	FilterData filterData = new FilterData(connectionPool);
+	private static LoadData loadData = new LoadData();
+	FilterData filterData = new FilterData();
 
-	private String jsonDataFromFile = "";
+	private static String jsonDataFromFile = "";
 	private static final String JSON_FILE_NAME = "users.json";
-	private User currentUser;
+	private static User currentUser;
 	LinkedHashMap<String, String> filters = new LinkedHashMap<String, String>();
 
-	@Before
-	public void setUp() throws Exception {
-		jsonDataFromFile = loadData.getFile(JSON_FILE_NAME);
+	@BeforeClass
+	public static void setUpBeforeClass() throws Exception{
 		currentUser = setUpDataForFilteringTestsAndReturnFirstUser();
+	}
+	@AfterClass
+	public static void tearDown() throws Exception{
+		loadData.deleteTable();
 	}
 
 	@Test
@@ -215,14 +220,14 @@ public class FilterDataTest {
 
 	}
 
-	private User setUpDataForFilteringTestsAndReturnFirstUser()
+	private static User setUpDataForFilteringTestsAndReturnFirstUser()
 			throws Exception {
-
+		jsonDataFromFile = loadData.getFile(JSON_FILE_NAME);
 		loadData.createDDL();
 		List<User> allUsers = loadData
 				.parseJsonIntoMatchObjects(jsonDataFromFile);
 		loadData.insertUsers(allUsers);
-		assertTrue(allUsers.size() > 1);
+
 		User user = allUsers.get(0);
 		user.setUserId(1);
 		return user;

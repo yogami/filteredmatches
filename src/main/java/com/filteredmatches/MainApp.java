@@ -1,5 +1,6 @@
 package com.filteredmatches;
 import com.filteredmatches.server.EmbeddedJettyServer;
+import com.filteredmatches.service.InitialDataSetupService;
 
 public class MainApp {
 	
@@ -11,6 +12,8 @@ public class MainApp {
 				if (args[0].equals("start")) {
 
 					thisServer.startServer();
+					InitialDataSetupService initialDataSetupService = new InitialDataSetupService();
+					initialDataSetupService.loadDataFromJsonIntoDatabase();
 					
 				} else if (args[0].equals("stop")) {
 

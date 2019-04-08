@@ -30,18 +30,20 @@ public class LoadData {
 			+ "FAVOURITE, RELIGION) VALUES(?,?,?,?,?,?,?,?,?,?,?,?) ";
 
 	private static final String SELECT_ALL_USERS_SQL = "SELECT * FROM  USERS";
+	
+	private static final String DROP_TABLE_USERS = "DROP TABLE USERS";
 
 	private Connection con;
 
-	public LoadData(ConnectionPool cpool) {
+	public LoadData() {
 		try {
-			con = cpool.getConnection();
+			con = ConnectionPool.getInstance().getConnection();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}
 	
-	public boolean initialieData() {
+	public boolean initializeData() {
 		String jsonString = getFile(JSON_FILE_NAME);
 		List<User> users = this.parseJsonIntoMatchObjects(jsonString);
 		boolean success = createDDL();
@@ -119,19 +121,25 @@ public class LoadData {
 				ps.setString(8, user.getMain_photo());
 				ps.setFloat(9, user.getCompatibility_score());
 				ps.setShort(10, user.getContacts_exchanged());
-				ps.setBoolean(11, user.isFavourite());
+				ps.setBoolean(11, user.getFavourite());
 				ps.setString(12, user.getReligion());
 				ps.execute();
 
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			return false;
+			
 
 		}
 		
 		return true;
 
+	}
+
+	public void deleteTable() throws Exception {
+		PreparedStatement ps = con.prepareStatement(DROP_TABLE_USERS);
+		ps.execute();
+		
 	}
 
 }

@@ -7,22 +7,27 @@ import java.util.List;
 
 public class ConnectionPool {
 
-	private List<Connection> connectionPool = new ArrayList<Connection>();
 	String url = "jdbc:h2:mem:";
 
-	public ConnectionPool() {
-		if (connectionPool == null || connectionPool.size() == 0) {
-			try {
-				connectionPool.add(DriverManager.getConnection(url));
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
+	private static final ConnectionPool CONNECTION_POOL = new ConnectionPool();
+	private Connection connection = null;
+
+	private ConnectionPool() {
+
+		try {
+			connection = DriverManager.getConnection(url);
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
 
 	}
-	
+
+	public static ConnectionPool getInstance() {
+		return CONNECTION_POOL;
+	}
+
 	public Connection getConnection() {
-		return connectionPool.get(0);
+		return connection;
 	}
 
 }

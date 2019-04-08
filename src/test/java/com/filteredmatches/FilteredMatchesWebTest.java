@@ -9,6 +9,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
 import com.filteredmatches.server.EmbeddedJettyServer;
+import com.filteredmatches.service.InitialDataSetupService;
 
 public class FilteredMatchesWebTest {
 
@@ -16,11 +17,17 @@ public class FilteredMatchesWebTest {
 	private static final Integer USER_ID = 1;
 
 	private EmbeddedJettyServer jettyServer = new EmbeddedJettyServer();
-
+	InitialDataSetupService initialDataSetupService = new InitialDataSetupService();
 	@Before
 	public void setUp() throws Exception {
 
 		jettyServer.startServer();
+		try {
+			initialDataSetupService.deleteDataFromDatabase();
+		} catch (Exception ex) {
+
+		}
+		initialDataSetupService.loadDataFromJsonIntoDatabase();
 	}
 
 	@Test
@@ -36,6 +43,7 @@ public class FilteredMatchesWebTest {
 	@After
 	public void tearDown() throws Exception {
 		jettyServer.stopServer();
+		initialDataSetupService.deleteDataFromDatabase();
 	}
 
 }

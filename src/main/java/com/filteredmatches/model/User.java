@@ -15,6 +15,7 @@ public class User {
 	private Boolean favourite;
 	private String religion;
 	private Float distanceInKms;
+	private Integer compatibilityPercentage;
 
 	public Integer getUserId() {
 		return userId;
@@ -23,8 +24,8 @@ public class User {
 		this.userId = userId;
 	}
 
-	public Float getDistanceInKms() {
-		return distanceInKms;
+	public Integer getDistanceInKms() {
+		return distanceInKms.intValue();
 	}
 	public void setDistanceInKms(Float distanceInKms) {
 		this.distanceInKms = distanceInKms;
@@ -68,6 +69,10 @@ public class User {
 	public Float getCompatibility_score() {
 		return compatibility_score;
 	}
+	
+	public Integer getCompatibilityPercentage() {
+		return Float.valueOf(compatibility_score*100).intValue();
+	}
 	public void setCompatibility_score(Float compatibility_score) {
 		this.compatibility_score = compatibility_score;
 	}
@@ -77,7 +82,7 @@ public class User {
 	public void setContacts_exchanged(Short contacts_exchanged) {
 		this.contacts_exchanged = contacts_exchanged;
 	}
-	public Boolean isFavourite() {
+	public Boolean getFavourite() {
 		return favourite;
 	}
 	public void setFavourite(Boolean favourite) {
