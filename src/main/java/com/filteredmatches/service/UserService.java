@@ -7,7 +7,7 @@ public class UserService {
 
 	FilterData filterData = new FilterData();
 
-	public User getCurrentUserById(Integer userId) {
+	public User getCurrentUserById(Integer userId) throws Exception {
 
 		return filterData.retrieveCurrentuser(userId);
 	}

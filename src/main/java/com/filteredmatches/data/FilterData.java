@@ -44,7 +44,7 @@ public class FilterData {
 	}
 
 	public List<User> retrieveMatchesForCurrentUser(User currentUser,
-			LinkedHashMap<String, String> filters) {
+			LinkedHashMap<String, String> filters) throws Exception {
 		String selectSql = SELECT_ALL_MATCHES_SQL;
 		selectSql = selectSql.replace(":lat",
 				currentUser.getCity().getLat().toString());
@@ -65,19 +65,14 @@ public class FilterData {
 
 		}
 		List<User> users = new ArrayList<User>();
-		try {
 
-			PreparedStatement ps = con.prepareStatement(selectSql);
+		PreparedStatement ps = con.prepareStatement(selectSql);
 
-			ResultSet rs = ps.executeQuery();
+		ResultSet rs = ps.executeQuery();
 
-			while (rs.next()) {
-				User user = populateMatch(rs);
-				users.add(user);
-
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
+		while (rs.next()) {
+			User user = populateMatch(rs);
+			users.add(user);
 
 		}
 
@@ -104,15 +99,12 @@ public class FilterData {
 		user.setReligion(rs.getString(13));
 		return user;
 	}
-	
+
 	private User populateMatch(ResultSet rs) throws SQLException {
 		User user = populateUser(rs);
 		user.setDistanceInKms(rs.getFloat(14));
 		return user;
 	}
-	
-	
-	
 
 	private String getPhotoFilterSql(LinkedHashMap<String, String> filters) {
 
@@ -234,21 +226,15 @@ public class FilterData {
 
 	}
 
-	public User retrieveCurrentuser(Integer userId) {
+	public User retrieveCurrentuser(Integer userId) throws SQLException {
 		String selectSql = SELECT_CURRENT_USER_SQL;
 		User currentUser = null;
 
-		try {
-
-			PreparedStatement ps = con.prepareStatement(selectSql);
-			ps.setInt(1, userId);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-				currentUser = populateUser(rs);
-
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
+		PreparedStatement ps = con.prepareStatement(selectSql);
+		ps.setInt(1, userId);
+		ResultSet rs = ps.executeQuery();
+		while (rs.next()) {
+			currentUser = populateUser(rs);
 
 		}
 

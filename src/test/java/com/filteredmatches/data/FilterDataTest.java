@@ -1,35 +1,34 @@
 package com.filteredmatches.data;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.filteredmatches.model.City;
 import com.filteredmatches.model.User;
 
 public class FilterDataTest {
 
+	//need this as a utility to setup data first
 	private static LoadData loadData = new LoadData();
+	
+	//class under test
 	FilterData filterData = new FilterData();
 
-	private static String jsonDataFromFile = "";
-	private static final String JSON_FILE_NAME = "users.json";
 	private static User currentUser;
 	LinkedHashMap<String, String> filters = new LinkedHashMap<String, String>();
 
 	@BeforeClass
-	public static void setUpBeforeClass() throws Exception{
+	public static void setUpBeforeClass() throws Exception {
 		currentUser = setUpDataForFilteringTestsAndReturnFirstUser();
 	}
 	@AfterClass
-	public static void tearDown() throws Exception{
+	public static void tearDown() throws Exception {
 		loadData.deleteTable();
 	}
 
@@ -222,14 +221,14 @@ public class FilterDataTest {
 
 	private static User setUpDataForFilteringTestsAndReturnFirstUser()
 			throws Exception {
-		jsonDataFromFile = loadData.getFile(JSON_FILE_NAME);
-		loadData.createDDL();
-		List<User> allUsers = loadData
-				.parseJsonIntoMatchObjects(jsonDataFromFile);
-		loadData.insertUsers(allUsers);
 
-		User user = allUsers.get(0);
+		loadData.initializeData();
+		User user = new User();
 		user.setUserId(1);
+		City city = new City();
+		city.setLat(53.801f);
+		city.setLon(-1.548567f);
+		user.setCity(city);
 		return user;
 	}
 
