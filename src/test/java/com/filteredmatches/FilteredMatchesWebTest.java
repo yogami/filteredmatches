@@ -13,9 +13,9 @@ import com.filteredmatches.server.EmbeddedJettyServer;
 public class FilteredMatchesWebTest {
 
 	private static final String MATCHES_URL = "/matches/";
-	private static final String USER = "caroline";
+	private static final Integer USER_ID = 1;
 
-	private EmbeddedJettyServer jettyServer = new EmbeddedJettyServer();;
+	private EmbeddedJettyServer jettyServer = new EmbeddedJettyServer();
 
 	@Before
 	public void setUp() throws Exception {
@@ -26,9 +26,11 @@ public class FilteredMatchesWebTest {
 	@Test
 	public void shouldReturnMatchesPage() {
 		WebDriver client = new HtmlUnitDriver();
-		client.get(jettyServer.getServerURI().toString() + MATCHES_URL + USER);
+		client.get(
+				jettyServer.getServerURI().toString() + MATCHES_URL + USER_ID);
 		String pageSource = client.getPageSource();
-		assertTrue(pageSource.contains("Hello"));
+
+		assertTrue(pageSource.contains("Natalia"));
 	}
 
 	@After

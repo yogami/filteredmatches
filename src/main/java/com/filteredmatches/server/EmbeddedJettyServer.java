@@ -59,13 +59,16 @@ public class EmbeddedJettyServer {
 		// scan for them instead.
 		contextHandler.setAttribute(
 				"org.eclipse.jetty.server.webapp.ContainerIncludeJarPattern",
-				".*/[^/]*servlet-api-[^/]*\\.jar$|.*/javax.servlet.jsp.jstl-.*\\.jar$|.*/[^/]*taglibs.*\\.jar$");
+				".*/[^/]*servlet-api-[^/]*\\.jar$|.*/javax.servlet.jsp.jstl-.*\\.jar$|.*/[^/]*taglibs.*\\.jar$|.*/jstl-.*\\.jar$");
+		
 		return contextHandler;
 	}
 
 	private WebApplicationContext getContext() {
-		AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
+		AnnotationConfigWebApplicationContext context =
+				new AnnotationConfigWebApplicationContext();
 		context.setConfigLocation(CONFIG_LOCATION);
+		
 		return context;
 	}
 

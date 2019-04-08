@@ -72,6 +72,7 @@
 			<version>2.52.0</version>
 			<scope>test</scope>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/jstl/jstl -->
 		<dependency>
 			<groupId>jstl</groupId>
 			<artifactId>jstl</artifactId>
@@ -82,7 +83,6 @@
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<version>1.4.199</version>
-			<scope>test</scope>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
 		<dependency>
@@ -90,14 +90,7 @@
 			<artifactId>gson</artifactId>
 			<version>2.8.5</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.ibm.db2.jcc/db2jcc4 had to 
-			add this because simple JDBC does not support named parameters -->
 
-		<dependency>
-			<groupId>com.ibm.db2.jcc</groupId>
-			<artifactId>db2jcc</artifactId>
-			<version>db2jcc4</version>
-		</dependency>
 
 	</dependencies>
 	<build>
@@ -107,7 +100,7 @@
 				<directory>/src/main/webapp</directory>
 			</resource>
 			<resource>
-				<directory>/src/main/resources</directory>
+				<directory>src/main/resources</directory>
 			</resource>
 		</resources>
 		<pluginManagement>
