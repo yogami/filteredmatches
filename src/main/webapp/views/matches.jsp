@@ -4,14 +4,14 @@
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<link href="${pageContext.request.contextPath}/resources/css/matches.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/css/matches.css" rel="stylesheet" type="text/css">
 <!------ Include the above in your HEAD tag ---------->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <head>
    <title>My Matches</title>
 </head>
 <body>
-   <div style="position : fixed;  height: 100%; width: 20%; float:left">SOMETHING GOES HERE<br/></div>
+   <div style="position : fixed;  height: 100%; width: 20%; float:left">FILTER MATCHES BY<br/></div>
    <div id="filteredResults" style="height : 100%; width: 80%; float:right;">
    <c:forEach var="user" items="${users}">
       <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">

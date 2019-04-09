@@ -4,28 +4,40 @@ import com.filteredmatches.service.InitialDataSetupService;
 
 public class MainApp {
 	
+	private static EmbeddedJettyServer thisServer = new EmbeddedJettyServer();
+	
 	public static void main(String[] args) {
-		EmbeddedJettyServer thisServer = new EmbeddedJettyServer();
+		
 		try {
 			if (args.length > 0) {
-
-				if (args[0].equals("start")) {
-
-					thisServer.startServer();
-					InitialDataSetupService initialDataSetupService = new InitialDataSetupService();
-					initialDataSetupService.loadDataFromJsonIntoDatabase();
-					
-				} else if (args[0].equals("stop")) {
-
-					thisServer.stopServer();
-
-				} else {
-					System.out.println("invalid arguments. Either enter start or stop without spaces");
-				}
-			}
+				startOrStopApp(args[0]);
+			}else 
+			    System.out.println("invalid arguments. Either enter start or stop without spaces");
 		} catch (Exception e) {
 
 		}
+	}
+
+	public static void startOrStopApp(String arg) throws Exception {
+		
+		if (arg.equals("start")) {
+
+			thisServer.startServer();
+			InitialDataSetupService initialDataSetupService = new InitialDataSetupService();
+			initialDataSetupService.loadDataFromJsonIntoDatabase();
+			
+		} else if (arg.equals("stop")) {
+
+			thisServer.stopServer();
+
+		} else {
+			System.out.println("invalid arguments. Either enter start or stop without spaces");
+		}
+	}
+
+	public static String getServerURI() {
+		
+		return thisServer.getServerURI();
 	}
 
 }

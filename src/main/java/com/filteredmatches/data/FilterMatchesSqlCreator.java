@@ -2,6 +2,8 @@ package com.filteredmatches.data;
 
 import java.util.LinkedHashMap;
 
+import org.h2.util.StringUtils;
+
 import com.filteredmatches.FilterMappings;
 import com.filteredmatches.model.User;
 
@@ -91,7 +93,7 @@ public class FilterMatchesSqlCreator {
 	private String getFilteredSql(LinkedHashMap<String, String> filters,
 			String typeOfIlter, String sqlFilterWith, String sqlFilterWithout) {
 		String hasFilter = filters.get(typeOfIlter);
-		if (hasFilter != null) {
+		if (!StringUtils.isNullOrEmpty(hasFilter)) {
 			if (hasFilter.equals("yes"))
 				return sqlFilterWith;
 

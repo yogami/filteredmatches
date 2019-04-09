@@ -19,8 +19,6 @@ public class EmbeddedJettyServer {
 
 	private Server server;
 
-	
-
 	public void startServer() throws Exception {
 		server = new Server(PORT);
 		server.setHandler(getServletContextHandler(getContext()));
@@ -52,6 +50,7 @@ public class EmbeddedJettyServer {
 		contextHandler.addServlet(
 				new ServletHolder(new DispatcherServlet(context)), MAPPING_URL);
 		contextHandler.addEventListener(new ContextLoaderListener(context));
+		
 		contextHandler.setResourceBase("src/main/webapp");
 		// Set the ContainerIncludeJarPattern so that jetty examines these
 		// container-path jars for tlds, web-fragments etc.
@@ -60,15 +59,15 @@ public class EmbeddedJettyServer {
 		contextHandler.setAttribute(
 				"org.eclipse.jetty.server.webapp.ContainerIncludeJarPattern",
 				".*/[^/]*servlet-api-[^/]*\\.jar$|.*/javax.servlet.jsp.jstl-.*\\.jar$|.*/[^/]*taglibs.*\\.jar$|.*/jstl-.*\\.jar$");
-		
+
 		return contextHandler;
 	}
 
 	private WebApplicationContext getContext() {
-		AnnotationConfigWebApplicationContext context =
-				new AnnotationConfigWebApplicationContext();
+		AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
+
 		context.setConfigLocation(CONFIG_LOCATION);
-		
+
 		return context;
 	}
 
