@@ -64,6 +64,12 @@
 			<artifactId>apache-jsp</artifactId>
 			<version>9.4.12.RC2</version>
 		</dependency>
+		<dependency>
+			<groupId>com.mashape.unirest</groupId>
+			<artifactId>unirest-java</artifactId>
+			<version>1.4.9</version>
+			<scope>test</scope>
+		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-htmlunit-driver -->
 		<dependency>
@@ -84,7 +90,7 @@
 			<artifactId>bootstrap</artifactId>
 			<version>4.3.1</version>
 		</dependency>
-        <!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
+		<!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>

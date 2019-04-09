@@ -5,6 +5,8 @@ import com.filteredmatches.model.User;
 
 public class UserService {
 
+	
+	//TODO: annotate this
 	UserData userData = new UserData();
 
 	public User getCurrentUserById(Integer userId) throws Exception {

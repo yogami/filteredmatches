@@ -7,9 +7,12 @@ import java.util.List;
 
 public class ConnectionPool {
 
+	//TODO: read this from a property file somewhere
 	String url = "jdbc:h2:mem:";
 
+	//TODO: create a list of pools
 	private static final ConnectionPool CONNECTION_POOL = new ConnectionPool();
+	
 	private Connection connection = null;
 
 	private ConnectionPool() {

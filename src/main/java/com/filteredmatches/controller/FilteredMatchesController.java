@@ -1,6 +1,5 @@
 package com.filteredmatches.controller;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.filteredmatches.dto.FilterDTO;
+import com.filteredmatches.dto.MatchDTO;
 import com.filteredmatches.model.User;
 import com.filteredmatches.service.FilterMatchesService;
 import com.filteredmatches.service.UserService;
@@ -20,8 +20,11 @@ import com.google.gson.Gson;
 
 @Controller
 public class FilteredMatchesController {
-
-	private UserService userService = new UserService();
+//TODO: exception handling and correct response. Create  custom RuntimeExceptions and handle them appropriately. Show the right page and error message
+	
+	//TODO:annotation for userservice
+	
+	
 	private FilterMatchesService filterMatchesService = new FilterMatchesService();
 
 	@RequestMapping(path = "/matches/{id}", method = {RequestMethod.GET,
@@ -31,13 +34,8 @@ public class FilteredMatchesController {
 			ModelMap modelMap) throws Exception {
 
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("matches");
-
-		User currentUser = userService.getCurrentUserById(userId);
-		List<User> users = filterMatchesService
-				.getMatchesForCurrentUser(currentUser, null);
-
-		modelMap.addAttribute("users", users);
+		modelAndView.setViewName("matches");		
+		modelMap.addAttribute("id", userId);
 		modelAndView.addAllObjects(modelMap);
 		return modelAndView;
 
@@ -48,13 +46,16 @@ public class FilteredMatchesController {
 	public String filteredMatches(@PathVariable("id") Integer userId,
 			@RequestBody FilterDTO filters) throws Exception {
 
-		User currentUser = userService.getCurrentUserById(userId);
 		
-		List<User> users = filterMatchesService
-				.getMatchesForCurrentUser(currentUser, filters);
+		
+		//TODO: rename this method to getMatches().
+		List<MatchDTO> matches = filterMatchesService
+				.getMatches(userId, filters);
 
+		//TODO: investigate if you can just return an array of objects and spring internally 
+		//converts the array into json. This way you can skip this gson business
 		Gson gson = new Gson();
-		String jsonString = gson.toJson(users);
+		String jsonString = gson.toJson(matches);
 		return jsonString;
 
 	}

@@ -9,6 +9,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.filteredmatches.dto.FilterDTO;
+import com.filteredmatches.dto.MatchDTO;
 import com.filteredmatches.model.City;
 import com.filteredmatches.model.User;
 
@@ -43,7 +44,7 @@ public class FilterDataTest {
 	public void shouldInsertUsersAndVerifyTheMatchesForCurrentUserWithNoFilters()
 			throws Exception {
 
-		List<User> matches = filterData
+		List<MatchDTO> matches = filterData
 				.retrieveMatchesForCurrentUser(currentUser, null);
 		assertEquals(24, matches.size());
 
@@ -56,7 +57,7 @@ public class FilterDataTest {
 		FilterDTO filterDTO = new FilterDTO();
 		filterDTO.setHasPhoto("no");
 
-		List<User> matches = filterData
+		List<MatchDTO> matches = filterData
 				.retrieveMatchesForCurrentUser(currentUser, filterDTO);
 		assertEquals(3, matches.size());
 
@@ -68,7 +69,7 @@ public class FilterDataTest {
 
 		FilterDTO filterDTO = new FilterDTO();
 		filterDTO.setHasPhoto("yes");
-		List<User> matches = filterData
+		List<MatchDTO> matches = filterData
 				.retrieveMatchesForCurrentUser(currentUser, filterDTO);
 		assertEquals(21, matches.size());
 
@@ -80,7 +81,7 @@ public class FilterDataTest {
 		FilterDTO filterDTO = new FilterDTO();
 		filterDTO.setHasContactsExchanged("no");;
 
-		List<User> matches = filterData
+		List<MatchDTO> matches = filterData
 				.retrieveMatchesForCurrentUser(currentUser, filterDTO);
 		assertEquals(13, matches.size());
 
@@ -92,7 +93,7 @@ public class FilterDataTest {
 		FilterDTO filterDTO = new FilterDTO();
 		filterDTO.setHasContactsExchanged("yes");
 
-		List<User> matches = filterData
+		List<MatchDTO> matches = filterData
 				.retrieveMatchesForCurrentUser(currentUser, filterDTO);
 		assertEquals(11, matches.size());
 
@@ -104,7 +105,7 @@ public class FilterDataTest {
 		FilterDTO filterDTO = new FilterDTO();
 		filterDTO.setIsFavourite("no");
 
-		List<User> matches = filterData
+		List<MatchDTO> matches = filterData
 				.retrieveMatchesForCurrentUser(currentUser, filterDTO);
 		assertEquals(19, matches.size());
 
@@ -116,7 +117,7 @@ public class FilterDataTest {
 		FilterDTO filterDTO = new FilterDTO();
 		filterDTO.setIsFavourite("yes");
 
-		List<User> matches = filterData
+		List<MatchDTO> matches = filterData
 				.retrieveMatchesForCurrentUser(currentUser, filterDTO);
 		assertEquals(5, matches.size());
 
@@ -129,7 +130,7 @@ public class FilterDataTest {
 		filterDTO.setLowerLimitCompatibility("0.75");
 		filterDTO.setUpperLimitCompatibility("1.0");
 
-		List<User> matches = filterData
+		List<MatchDTO> matches = filterData
 				.retrieveMatchesForCurrentUser(currentUser, filterDTO);
 		assertEquals(21, matches.size());
 
@@ -151,7 +152,7 @@ public class FilterDataTest {
 		filterDTO.setLowerLimitAge("18");
 		filterDTO.setUpperLimitAge("35");
 
-		List<User> matches = filterData
+		List<MatchDTO> matches = filterData
 				.retrieveMatchesForCurrentUser(currentUser, filterDTO);
 		assertEquals(2, matches.size());
 
@@ -175,7 +176,7 @@ public class FilterDataTest {
 		filterDTO.setUpperLimitHeight("160");
 		
 		
-		List<User> matches = filterData
+		List<MatchDTO> matches = filterData
 				.retrieveMatchesForCurrentUser(currentUser, filterDTO);
 		assertEquals(15, matches.size());
 		
@@ -201,7 +202,7 @@ public class FilterDataTest {
 
 		
 
-		List<User> matches = filterData
+		List<MatchDTO> matches = filterData
 				.retrieveMatchesForCurrentUser(currentUser, filterDTO);
 		assertEquals(16, matches.size());
 		
@@ -228,7 +229,7 @@ public class FilterDataTest {
 		filterDTO.setLowerLimitHeight("140");
 		filterDTO.setUpperLimitHeight("200");
 		
-		List<User> matches = filterData
+		List<MatchDTO> matches = filterData
 				.retrieveMatchesForCurrentUser(currentUser, filterDTO);
 		assertEquals(3, matches.size());
 
@@ -248,7 +249,7 @@ public class FilterDataTest {
 		
 
 		
-		List<User> matches = filterData
+		List<MatchDTO> matches = filterData
 				.retrieveMatchesForCurrentUser(currentUser, filterDTO);
 		assertEquals(2, matches.size());
 

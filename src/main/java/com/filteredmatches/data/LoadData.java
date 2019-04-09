@@ -27,6 +27,7 @@ public class LoadData extends BaseData {
 	
 	private ReadJsonData readJsonData = new ReadJsonData();
 
+	//TODO: separate reading JSON, creating DDL and inserting DDL
 	
 	public boolean initializeData() throws Exception {
 
