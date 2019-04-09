@@ -1,15 +1,15 @@
 package com.filteredmatches.service;
 
-import com.filteredmatches.data.FilterData;
+import com.filteredmatches.data.UserData;
 import com.filteredmatches.model.User;
 
 public class UserService {
 
-	FilterData filterData = new FilterData();
+	UserData userData = new UserData();
 
 	public User getCurrentUserById(Integer userId) throws Exception {
 
-		return filterData.retrieveCurrentuser(userId);
+		return userData.retrieveCurrentuser(userId);
 	}
 
 }

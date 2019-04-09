@@ -1,44 +1,34 @@
 package com.filteredmatches.data;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
 
 import com.filteredmatches.model.City;
 import com.filteredmatches.model.User;
 
-public class FilterData extends BaseData {
+public class UserData extends BaseData {
+	
+	private static final String SELECT_CURRENT_USER_SQL = "SELECT * FROM USERS WHERE ID = ?";
+	
+	
 
-	private FilterMatchesSqlCreator filterMatchesSqlCreator = new FilterMatchesSqlCreator();
-
-	public List<User> retrieveMatchesForCurrentUser(User currentUser,
-			LinkedHashMap<String, String> filters) throws Exception {
-
-		String selectSql = filterMatchesSqlCreator.createFilterSql(currentUser,
-				filters);
-		return runMatchesQuery(selectSql);
-
-	}
-
-	private List<User> runMatchesQuery(String selectSql) throws SQLException {
-		List<User> users = new ArrayList<User>();
-
-		PreparedStatement ps = con.prepareStatement(selectSql);
-
+	public User retrieveCurrentuser(Integer userId) throws SQLException {
+		String selectSql = SELECT_CURRENT_USER_SQL;
+		User currentUser = null;
+        PreparedStatement ps = con.prepareStatement(selectSql);
+		ps.setInt(1, userId);
 		ResultSet rs = ps.executeQuery();
-
 		while (rs.next()) {
-			User user = populateMatch(rs);
-			users.add(user);
+			currentUser = populateUser(rs);
+
 		}
 
-		return users;
+		return currentUser;
 	}
-
-	private User populateMatch(ResultSet rs) throws SQLException {
+	
+	private User populateUser(ResultSet rs) throws SQLException {
 		User user = new User();
 		user.setUserId(rs.getInt(1));
 		user.setDisplay_name(rs.getString(2));
@@ -55,8 +45,6 @@ public class FilterData extends BaseData {
 		user.setContacts_exchanged(rs.getShort(11));
 		user.setFavourite(rs.getBoolean(12));
 		user.setReligion(rs.getString(13));
-		user.setDistanceInKms(rs.getFloat(14));
 		return user;
 	}
-
 }

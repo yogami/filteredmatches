@@ -11,9 +11,11 @@
    <title>My Matches</title>
 </head>
 <body>
+   <div style="position : fixed;  height: 100%; width: 20%; float:left">SOMETHING GOES HERE<br/></div>
+   <div id="filteredResults" style="height : 100%; width: 80%; float:right;">
    <c:forEach var="user" items="${users}">
       <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
-      <div class="container">
+      <div class="container" style="width: 650px;">
          <div class="row">
             <div class="col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6">
                <div class="well profile">
@@ -46,5 +48,6 @@
          </div>
       </div>
    </c:forEach>
+   </div>
 </body>
 </html>

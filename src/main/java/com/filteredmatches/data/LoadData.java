@@ -1,6 +1,5 @@
 package com.filteredmatches.data;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -9,7 +8,7 @@ import java.util.List;
 
 import com.filteredmatches.model.User;
 
-public class LoadData {
+public class LoadData extends BaseData {
 
 	private static final String CREATE_TABLE_SQL = "create table USERS(ID IDENTITY , DISPLAY_NAME NVARCHAR(64) , "
 			+ "AGE INT , JOB_TITLE VARCHAR(256) , HEIGHT_IN_CM INT , CITY_NAME NVARCHAR(64) , "
@@ -25,18 +24,10 @@ public class LoadData {
 
 	private static final String DROP_TABLE_USERS = "DROP TABLE USERS";
 
-	private Connection con;
-
+	
 	private ReadJsonData readJsonData = new ReadJsonData();
 
-	public LoadData() {
-		try {
-			con = ConnectionPool.getInstance().getConnection();
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-	}
-
+	
 	public boolean initializeData() throws Exception {
 
 		List<User> users = readJsonData.getUserListFromJsonFile();
@@ -74,7 +65,6 @@ public class LoadData {
 			ps.setBoolean(11, user.getFavourite());
 			ps.setString(12, user.getReligion());
 			ps.execute();
-
 		}
 
 		return true;
