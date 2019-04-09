@@ -28,11 +28,14 @@ public class MvcWebConfig implements WebMvcConfigurer {
 	}
 
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		
 
 		// Register resource handler for CSS and JS
-		registry.addResourceHandler("/css/**")
-				.addResourceLocations("css/");
+		registry.addResourceHandler("/css/**").addResourceLocations("css/");
+		registry.addResourceHandler("/images/**")
+				.addResourceLocations("images/");
+		registry.addResourceHandler("/css/**").addResourceLocations("css/");
+		registry.addResourceHandler("/js/**")
+				.addResourceLocations("js/");
 
 	}
 }

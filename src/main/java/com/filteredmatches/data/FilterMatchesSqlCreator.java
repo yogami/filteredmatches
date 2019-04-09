@@ -1,10 +1,8 @@
 package com.filteredmatches.data;
 
-import java.util.LinkedHashMap;
-
 import org.h2.util.StringUtils;
 
-import com.filteredmatches.FilterMappings;
+import com.filteredmatches.dto.FilterDTO;
 import com.filteredmatches.model.User;
 
 public class FilterMatchesSqlCreator {
@@ -46,14 +44,14 @@ public class FilterMatchesSqlCreator {
 	private static final String FILTER_WITH_DISTANCE = " WHERE U.distance < "
 			+ DISTANCE_PARAMETER;
 	private static final String NO_FILTER_APPLIED = "";
-	
-	public String createFilterSql(User currentUser,LinkedHashMap<String, String> filters) {
+
+	public String createFilterSql(User currentUser, FilterDTO filterDTO) {
 		String selectSql = SELECT_ALL_MATCHES_SQL;
 		selectSql = applyCurrentUserParameters(currentUser, selectSql);
-		selectSql = applyFilters(filters, selectSql);
+		selectSql = applyFilters(filterDTO, selectSql);
 		return selectSql;
 	}
-	
+
 	private String applyCurrentUserParameters(User currentUser,
 			String selectSql) {
 		selectSql = selectSql.replace(LATITUDE_PARAMETER,
@@ -65,36 +63,33 @@ public class FilterMatchesSqlCreator {
 		return selectSql;
 	}
 
-	private String applyFilters(LinkedHashMap<String, String> filters,
-			String selectSql) {
-		if (filters != null && filters.size() > 0) {
-			selectSql = applyBooleanFilters(filters, selectSql);
-			selectSql = applyRangeFilters(filters, selectSql);
-			selectSql = formulateNewSqlFWithOuterTableorDistanceLimit(filters,
+	private String applyFilters(FilterDTO filterDTO, String selectSql) {
+		if (filterDTO != null) {
+			selectSql = applyBooleanFilters(filterDTO, selectSql);
+			selectSql = applyRangeFilters(filterDTO, selectSql);
+			selectSql = formulateNewSqlFWithOuterTableorDistanceLimit(filterDTO,
 					selectSql);
 
 		}
 		return selectSql;
 	}
 
-	private String applyBooleanFilters(LinkedHashMap<String, String> filters,
-			String selectSql) {
-		selectSql += getFilteredSql(filters, FilterMappings.HAS_PHOTO_FILTER,
-				FILTER_WITH_PHOTO, FILTER_WITHOUT_PHOTO);
-		selectSql += getFilteredSql(filters,
-				FilterMappings.HAS_CONTACTS_EXCHANGED,
+	private String applyBooleanFilters(FilterDTO filterDTO, String selectSql) {
+		selectSql += getFilteredSql(filterDTO.getHasPhoto(), FILTER_WITH_PHOTO,
+				FILTER_WITHOUT_PHOTO);
+		selectSql += getFilteredSql(filterDTO.getHasContactsExchanged(),
 				FILTER_WITH_CONTACTS_EXCHANGED,
 				FILTER_WITHOUT_CONTACTS_EXCHANGED);
-		selectSql += getFilteredSql(filters, FilterMappings.IS_FAVOURITE,
+		selectSql += getFilteredSql(filterDTO.getIsFavourite(),
 				FILTER_WITH_FAVOURITES, FILTER_WITHOUT_FAVOURITES);
 		return selectSql;
 	}
 
-	private String getFilteredSql(LinkedHashMap<String, String> filters,
-			String typeOfIlter, String sqlFilterWith, String sqlFilterWithout) {
-		String hasFilter = filters.get(typeOfIlter);
-		if (!StringUtils.isNullOrEmpty(hasFilter)) {
-			if (hasFilter.equals("yes"))
+	private String getFilteredSql(String booleanFilter, String sqlFilterWith,
+			String sqlFilterWithout) {
+
+		if (!StringUtils.isNullOrEmpty(booleanFilter)) {
+			if (booleanFilter.equals("yes"))
 				return sqlFilterWith;
 
 			else
@@ -105,35 +100,31 @@ public class FilterMatchesSqlCreator {
 			return NO_FILTER_APPLIED;
 	}
 
-	private String applyRangeFilters(LinkedHashMap<String, String> filters,
-			String selectSql) {
-		selectSql = getRangeSql(filters, selectSql,
-				FilterMappings.LOWER_LIMIT_COMPATIBILITY,
-				FilterMappings.UPPER_LIMIT_COMPATIBILITY,
+	private String applyRangeFilters(FilterDTO filterDTO, String selectSql) {
+		selectSql = getRangeSql(filterDTO, selectSql,
+				filterDTO.getLowerLimitCompatibility(),
+				filterDTO.getUpperLimitCompatibility(),
 				FILTER_WITHCOMPATIBILITY_SCORE, LOWER_COMPATIBILITY_PARAMETER,
 				UPPER_COMPATIBILITY_PARAMETER);
-		selectSql = getRangeSql(filters, selectSql,
-				FilterMappings.LOWER_LIMIT_AGE, FilterMappings.UPPER_LIMIT_AGE,
+		selectSql = getRangeSql(filterDTO, selectSql,
+				filterDTO.getLowerLimitAge(), filterDTO.getUpperLimitAge(),
 				FILTER_WITH_AGE, LOWER_AGE_PARAMETER, UPPER_AGE_PARAMETER);
-		selectSql = getRangeSql(filters, selectSql,
-				FilterMappings.LOWER_LIMIT_HEIGHT,
-				FilterMappings.UPPER_LIMIT_HEIGHT, FILTER_WITH_HEIGHT,
+		selectSql = getRangeSql(filterDTO, selectSql,
+				filterDTO.getLowerLimitHeight(),
+				filterDTO.getUpperLimitHeight(), FILTER_WITH_HEIGHT,
 				LOWER_HEIGHT_PARAMETER, UPPER_HEIGHT_PARAMETER);
 		return selectSql;
 	}
 
-	private String getRangeSql(LinkedHashMap<String, String> filters,
-			String selectSql, String lowerLimitFilter, String upperLimitFilter,
-			String rangeFilterSql, String lowerLimitParameter,
-			String upperLimitParameter) {
-		String hasFilter = filters.get(lowerLimitFilter);
-		if (hasFilter != null) {
+	private String getRangeSql(FilterDTO filterDTO, String selectSql,
+			String lowerLimit, String upperLimit, String rangeFilterSql,
+			String lowerLimitParameter, String upperLimitParameter) {
+
+		if (lowerLimit != null) {
 
 			selectSql += rangeFilterSql;
-			selectSql = selectSql.replace(lowerLimitParameter,
-					filters.get(lowerLimitFilter));
-			selectSql = selectSql.replace(upperLimitParameter,
-					filters.get(upperLimitFilter));
+			selectSql = selectSql.replace(lowerLimitParameter, lowerLimit);
+			selectSql = selectSql.replace(upperLimitParameter, upperLimit);
 
 		}
 
@@ -141,15 +132,14 @@ public class FilterMatchesSqlCreator {
 	}
 
 	private String formulateNewSqlFWithOuterTableorDistanceLimit(
-			LinkedHashMap<String, String> filters, String currentSql) {
+			FilterDTO filterDTO, String currentSql) {
 
-		String hasDistanceFilter = filters.get(FilterMappings.DISTANCE_LIMIT);
-		if (hasDistanceFilter != null) {
+		String distanceLimit = filterDTO.getDistanceLimit();
+		if (distanceLimit != null) {
 
 			currentSql = "SELECT * FROM (" + currentSql + ") U";
 			currentSql += FILTER_WITH_DISTANCE;
-			currentSql = currentSql.replace(DISTANCE_PARAMETER,
-					filters.get(FilterMappings.DISTANCE_LIMIT));
+			currentSql = currentSql.replace(DISTANCE_PARAMETER, distanceLimit);
 
 		}
 

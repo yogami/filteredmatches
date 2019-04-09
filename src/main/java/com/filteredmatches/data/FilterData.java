@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import com.filteredmatches.dto.FilterDTO;
 import com.filteredmatches.model.City;
 import com.filteredmatches.model.User;
 
@@ -15,10 +16,10 @@ public class FilterData extends BaseData {
 	private FilterMatchesSqlCreator filterMatchesSqlCreator = new FilterMatchesSqlCreator();
 
 	public List<User> retrieveMatchesForCurrentUser(User currentUser,
-			LinkedHashMap<String, String> filters) throws Exception {
+			FilterDTO filterDTO) throws Exception {
 
 		String selectSql = filterMatchesSqlCreator.createFilterSql(currentUser,
-				filters);
+				filterDTO);
 		return runMatchesQuery(selectSql);
 
 	}
