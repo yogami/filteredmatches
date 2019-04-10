@@ -19,9 +19,15 @@
         
         $("#filter_button").click(function(){
            var data = {};
-		   data["hasPhoto"] = $("input[name='photo_filter']:checked").val();
-		   data["isFavourite"] = $("input[name='favourite_filter']:checked").val();
-		   data["hasContactsExchanged"] = $("input[name='contacts_exchanged_filter']:checked").val();
+           var hasPhoto = $("input[name='photo_filter']:checked").val();
+		   if(hasPhoto && hasPhoto != '')data["hasPhoto"] = hasPhoto
+		   var isFavourite = $("input[name='favourite_filter']:checked").val();
+		   if(isFavourite && isFavourite != '')data["isFavourite"] = isFavourite;
+		   
+		   var hasContactsExchanged = $("input[name='contacts_exchanged_filter']:checked").val();
+		   if(hasContactsExchanged && hasContactsExchanged != '')data["hasContactsExchanged"] = hasContactsExchanged;
+		   
+		  
 		   data["distanceLimit"] = $("input[name='distance_filter']").val();
 		   var lowerLimitCompatibility = $("#compatibility_filter option:selected").val();
 		   
@@ -94,7 +100,7 @@
 	     $("#filteredResults").empty();
 	     var resultsHtml = '';
 	     $.each(data,function(){
-	     var mainPhoto = (this.main_photo == '')? "<img src=\"/images/no_photo_available.png\" alt=\"\" class=\"img-circle img-responsive\">" : "<img src=\""+this.main_photo+"\" alt=\"\" class=\"img-circle img-responsive\">";
+	     //if(!this.main_photo || this.main_photo == ''){ this.main_photo="/images/no_photo_available.png";}
 	     resultsHtml +=  "<div class=\"container\">"+
 	      "<div class=\"row\">"+
 	         
@@ -140,7 +146,8 @@
    <body>
    <input type="hidden"id="id" name="id" value="${id}"/>
       <div class="jumbotron  sticky-top" >
-         <div class="container">
+         <button data-toggle="collapse" data-target="#filterCriteria">Show/Hide filter</button>
+         <div id="filterCriteria" class="container">
                <div class="row">
                       <div class="col-sm-3">
                           
@@ -191,7 +198,7 @@
 										 
 										    <span class="font-weight-bold indigo-text mr-2 mt-1">30 km</span>
 										
-										    <input name="distance_filter" class="border-0" type="range" min="30" max="300" data-show-value="true" 
+										    <input name="distance_filter" value="300" class="border-0" type="range" min="30" max="300" data-show-value="true" 
 										    onchange="updateDistanceText(this.value)" > 
 										   
 										  
