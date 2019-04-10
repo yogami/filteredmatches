@@ -42,7 +42,7 @@ public class FilteredMatchesControllerTest {
 	@Test
 	public void shouldReturnMatches() throws Exception {
 		ModelAndView mv = filteredMatchesController.matches(1, new ModelMap());
-		assertEquals(mv.getViewName(), "matches");
+		assertEquals( "matches",mv.getViewName());
 
 	}
 

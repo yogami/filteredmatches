@@ -103,22 +103,22 @@ public class FilterMatchesSqlCreator {
 	}
 
 	private String applyRangeFilters(FilterDTO filterDTO, String selectSql) {
-		selectSql = getRangeSql(filterDTO, selectSql,
+		selectSql = getRangeSql(selectSql,
 				filterDTO.getLowerLimitCompatibility(),
 				filterDTO.getUpperLimitCompatibility(),
 				FILTER_WITHCOMPATIBILITY_SCORE, LOWER_COMPATIBILITY_PARAMETER,
 				UPPER_COMPATIBILITY_PARAMETER);
-		selectSql = getRangeSql(filterDTO, selectSql,
+		selectSql = getRangeSql(selectSql,
 				filterDTO.getLowerLimitAge(), filterDTO.getUpperLimitAge(),
 				FILTER_WITH_AGE, LOWER_AGE_PARAMETER, UPPER_AGE_PARAMETER);
-		selectSql = getRangeSql(filterDTO, selectSql,
+		selectSql = getRangeSql( selectSql,
 				filterDTO.getLowerLimitHeight(),
 				filterDTO.getUpperLimitHeight(), FILTER_WITH_HEIGHT,
 				LOWER_HEIGHT_PARAMETER, UPPER_HEIGHT_PARAMETER);
 		return selectSql;
 	}
 
-	private String getRangeSql(FilterDTO filterDTO, String selectSql,
+	private String getRangeSql( String selectSql,
 			String lowerLimit, String upperLimit, String rangeFilterSql,
 			String lowerLimitParameter, String upperLimitParameter) {
 

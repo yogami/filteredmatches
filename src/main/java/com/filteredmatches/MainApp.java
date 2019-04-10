@@ -16,9 +16,9 @@ public class MainApp {
 			if (args.length > 0) {
 				startOrStopApp(args[0]);
 			}else 
-			    System.out.println("invalid arguments. Either enter start or stop without spaces");
+			    System.err.println("invalid arguments. Either enter start or stop without spaces");
 		} catch (Exception e) {
-
+			System.err.println("error starting the server"+e);
 		}
 	}
 
@@ -35,7 +35,7 @@ public class MainApp {
 			thisServer.stopServer();
 
 		} else {
-			System.out.println("invalid arguments. Either enter start or stop without spaces");
+			System.err.println("invalid arguments. Either enter start or stop without spaces");
 		}
 	}
 

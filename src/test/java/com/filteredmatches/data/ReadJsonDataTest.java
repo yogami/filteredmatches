@@ -34,7 +34,7 @@ public class ReadJsonDataTest {
 	}
 
 	private void verifyTheSecondMatch(List<User> allUsers) {
-		assertEquals(allUsers.size(), 25);
+		assertEquals(25, allUsers.size());
 		User match = allUsers.get(1);
 		assertNotNull(allUsers);
 		assertEquals("Solihull", match.getCity().getName());

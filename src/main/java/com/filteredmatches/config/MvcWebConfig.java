@@ -27,6 +27,7 @@ public class MvcWebConfig implements WebMvcConfigurer {
 		return viewResolver;
 	}
 
+	
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 
 		// Register resource handler for CSS and JS

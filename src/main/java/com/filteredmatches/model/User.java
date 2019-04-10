@@ -15,7 +15,7 @@ public class User {
 	private Boolean favourite;
 	private String religion;
 	private Float distanceInKms;
-	private Integer compatibilityPercentage;
+	
 
 	public Integer getUserId() {
 		return userId;
