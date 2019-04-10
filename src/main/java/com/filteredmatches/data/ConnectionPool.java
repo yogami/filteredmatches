@@ -10,7 +10,7 @@ public class ConnectionPool {
 	//TODO: read this from a property file somewhere
 	String url = "jdbc:h2:mem:";
 
-	//TODO: create a list of pools
+	//TODO: create a cache like list  to actually call it a connectionpool
 	private static final ConnectionPool CONNECTION_POOL = new ConnectionPool();
 	
 	private Connection connection = null;

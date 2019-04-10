@@ -43,8 +43,8 @@ public class FilterMatchesSqlCreator {
 	private static final String FILTER_WITHOUT_PHOTO = " AND (MAIN_PHOTO_URL is null or MAIN_PHOTO_URL = '') ";
 	private static final String FILTER_WITH_FAVOURITES = " AND FAVOURITE = TRUE";
 	private static final String FILTER_WITHOUT_FAVOURITES = " AND FAVOURITE = FALSE";
-	private static final String FILTER_WITH_DISTANCE = " WHERE U.distance < "
-			+ DISTANCE_PARAMETER;
+	private static final String FILTER_WITH_DISTANCE_LESS_THAN = " WHERE U.distance < "+ DISTANCE_PARAMETER;
+			
 	private static final String NO_FILTER_APPLIED = "";
 
 	public String createFilterSql(User currentUser, FilterDTO filterDTO) {
@@ -140,7 +140,7 @@ public class FilterMatchesSqlCreator {
 		if (distanceLimit != null) {
 
 			currentSql = "SELECT * FROM (" + currentSql + ") U";
-			currentSql += FILTER_WITH_DISTANCE;
+			currentSql += FILTER_WITH_DISTANCE_LESS_THAN;
 			currentSql = currentSql.replace(DISTANCE_PARAMETER, distanceLimit);
 
 		}

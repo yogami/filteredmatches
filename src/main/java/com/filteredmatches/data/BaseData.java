@@ -2,6 +2,7 @@ package com.filteredmatches.data;
 
 import java.sql.Connection;
 
+
 public abstract class BaseData {
 
 	protected Connection con;
