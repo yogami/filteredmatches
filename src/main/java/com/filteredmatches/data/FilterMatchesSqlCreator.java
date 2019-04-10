@@ -1,22 +1,24 @@
 package com.filteredmatches.data;
 
 import org.h2.util.StringUtils;
+import org.springframework.stereotype.Component;
 
 import com.filteredmatches.dto.FilterDTO;
 import com.filteredmatches.model.User;
 
+@Component("filtermatchesSqlCreator")
 public class FilterMatchesSqlCreator {
 
-	public static final String ID_PARAMETER = ":id";
-	public static final String LATITUDE_PARAMETER = ":lat";
-	public static final String LONGITUDE_PARAMETER = ":lon";
-	public static final String LOWER_AGE_PARAMETER = ":lowerAge";
-	public static final String UPPER_AGE_PARAMETER = ":upperAge";
-	public static final String LOWER_HEIGHT_PARAMETER = ":lowerHeight";
-	public static final String UPPER_HEIGHT_PARAMETER = ":upperHeight";
-	public static final String LOWER_COMPATIBILITY_PARAMETER = ":lowerCompatibility";
-	public static final String UPPER_COMPATIBILITY_PARAMETER = ":upperCOmpatibility";
-	public static final String DISTANCE_PARAMETER = ":distance";
+	private static final String ID_PARAMETER = ":id";
+	private static final String LATITUDE_PARAMETER = ":lat";
+	private static final String LONGITUDE_PARAMETER = ":lon";
+	private static final String LOWER_AGE_PARAMETER = ":lowerAge";
+	private static final String UPPER_AGE_PARAMETER = ":upperAge";
+	private static final String LOWER_HEIGHT_PARAMETER = ":lowerHeight";
+	private static final String UPPER_HEIGHT_PARAMETER = ":upperHeight";
+	private static final String LOWER_COMPATIBILITY_PARAMETER = ":lowerCompatibility";
+	private static final String UPPER_COMPATIBILITY_PARAMETER = ":upperCOmpatibility";
+	private static final String DISTANCE_PARAMETER = ":distance";
 
 	private static final String SELECT_ALL_MATCHES_SQL = "SELECT *,( 3959 * acos( cos( radians("
 			+ LATITUDE_PARAMETER + ") ) "
@@ -38,9 +40,9 @@ public class FilterMatchesSqlCreator {
 	private static final String FILTER_WITH_CONTACTS_EXCHANGED = " AND CONTACTS_EXCHANGED > 0";
 	private static final String FILTER_WITHOUT_CONTACTS_EXCHANGED = " AND CONTACTS_EXCHANGED = 0";
 	private static final String FILTER_WITH_PHOTO = " AND MAIN_PHOTO_URL is not null AND  MAIN_PHOTO_URL != '' ";
-	private static final String FILTER_WITHOUT_PHOTO = " AND MAIN_PHOTO_URL is null or MAIN_PHOTO_URL = '' ";
-	private static final String FILTER_WITH_FAVOURITES = " AND FAVOURITE = true";
-	private static final String FILTER_WITHOUT_FAVOURITES = " AND FAVOURITE = false";
+	private static final String FILTER_WITHOUT_PHOTO = " AND (MAIN_PHOTO_URL is null or MAIN_PHOTO_URL = '') ";
+	private static final String FILTER_WITH_FAVOURITES = " AND FAVOURITE = TRUE";
+	private static final String FILTER_WITHOUT_FAVOURITES = " AND FAVOURITE = FALSE";
 	private static final String FILTER_WITH_DISTANCE = " WHERE U.distance < "
 			+ DISTANCE_PARAMETER;
 	private static final String NO_FILTER_APPLIED = "";
@@ -67,7 +69,7 @@ public class FilterMatchesSqlCreator {
 		if (filterDTO != null) {
 			selectSql = applyBooleanFilters(filterDTO, selectSql);
 			selectSql = applyRangeFilters(filterDTO, selectSql);
-			selectSql = formulateNewSqlFWithOuterTableorDistanceLimit(filterDTO,
+			selectSql = formulateNewSqlFWithOuterTableonDistanceLimit(filterDTO,
 					selectSql);
 
 		}
@@ -131,7 +133,7 @@ public class FilterMatchesSqlCreator {
 		return selectSql;
 	}
 
-	private String formulateNewSqlFWithOuterTableorDistanceLimit(
+	private String formulateNewSqlFWithOuterTableonDistanceLimit(
 			FilterDTO filterDTO, String currentSql) {
 
 		String distanceLimit = filterDTO.getDistanceLimit();

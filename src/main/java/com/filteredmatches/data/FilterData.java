@@ -6,15 +6,22 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Repository;
+
 import com.filteredmatches.dto.FilterDTO;
 import com.filteredmatches.dto.MatchDTO;
 import com.filteredmatches.model.User;
 
-public class FilterData extends BaseData {
 
-	//TODO: annotate this
-	private FilterMatchesSqlCreator filterMatchesSqlCreator = new FilterMatchesSqlCreator();
+@Repository("filterData")
+public class FilterData extends BaseData implements IFilterData {
 
+	@Autowired
+	@Qualifier("filtermatchesSqlCreator")
+	private FilterMatchesSqlCreator filterMatchesSqlCreator;
+	
 	public List<MatchDTO> retrieveMatchesForCurrentUser(User currentUser,
 			FilterDTO filterDTO) throws Exception {
 

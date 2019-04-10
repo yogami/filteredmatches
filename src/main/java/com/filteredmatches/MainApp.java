@@ -1,10 +1,14 @@
 package com.filteredmatches;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+
 import com.filteredmatches.server.EmbeddedJettyServer;
 import com.filteredmatches.service.InitialDataSetupService;
 
 public class MainApp {
 	
 	private static EmbeddedJettyServer thisServer = new EmbeddedJettyServer();
+	
 	
 	public static void main(String[] args) {
 		
@@ -23,8 +27,8 @@ public class MainApp {
 		if (arg.equals("start")) {
 
 			thisServer.startServer();
-			InitialDataSetupService initialDataSetupService = new InitialDataSetupService();
-			initialDataSetupService.loadDataFromJsonIntoDatabase();
+			
+			
 			
 		} else if (arg.equals("stop")) {
 

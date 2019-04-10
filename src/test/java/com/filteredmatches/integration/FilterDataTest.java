@@ -1,37 +1,55 @@
-package com.filteredmatches.data;
+package com.filteredmatches.integration;
 
 import static org.junit.Assert.assertEquals;
 
 import java.util.List;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.filteredmatches.config.AppConfig;
+import com.filteredmatches.data.IFilterData;
+import com.filteredmatches.data.ILoadData;
+import com.filteredmatches.data.IUserData;
 import com.filteredmatches.dto.FilterDTO;
 import com.filteredmatches.dto.MatchDTO;
 import com.filteredmatches.model.City;
 import com.filteredmatches.model.User;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = {AppConfig.class})
 public class FilterDataTest {
 
 	// need this as a utility to setup data first
-	private static LoadData loadData = new LoadData();
+	@Autowired
+	@Qualifier("loadData")
+	private ILoadData loadData;
 
 	// need this to retrieve current User
-	private UserData userData = new UserData();
+
+	@Autowired
+	@Qualifier("userData")
+	private IUserData userData;
 
 	// class under test
-	private FilterData filterData = new FilterData();
+	@Autowired
+	@Qualifier("filterData")
+	private IFilterData filterData;
 
-	private static User currentUser;
+	private User currentUser;
 
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		currentUser = setUpDataForFilteringTestsAndReturnFirstUser();
 	}
-	@AfterClass
-	public static void tearDown() throws Exception {
+	@After
+	public void tearDown() throws Exception {
 		loadData.deleteTable();
 	}
 
@@ -156,11 +174,10 @@ public class FilterDataTest {
 				.retrieveMatchesForCurrentUser(currentUser, filterDTO);
 		assertEquals(2, matches.size());
 
-		
 		filterDTO = new FilterDTO();
 		filterDTO.setLowerLimitAge("36");
 		filterDTO.setUpperLimitAge("95");
-		
+
 		matches = filterData.retrieveMatchesForCurrentUser(currentUser,
 				filterDTO);
 		assertEquals(22, matches.size());
@@ -174,18 +191,15 @@ public class FilterDataTest {
 		FilterDTO filterDTO = new FilterDTO();
 		filterDTO.setLowerLimitHeight("135");
 		filterDTO.setUpperLimitHeight("160");
-		
-		
+
 		List<MatchDTO> matches = filterData
 				.retrieveMatchesForCurrentUser(currentUser, filterDTO);
 		assertEquals(15, matches.size());
-		
 
-		 filterDTO = new FilterDTO();
+		filterDTO = new FilterDTO();
 		filterDTO.setLowerLimitHeight("161");
 		filterDTO.setUpperLimitHeight("210");
 
-		
 		matches = filterData.retrieveMatchesForCurrentUser(currentUser,
 				filterDTO);
 		assertEquals(9, matches.size());
@@ -195,22 +209,16 @@ public class FilterDataTest {
 	@Test
 	public void shouldInsertUsersAndVerifyMatchesWithDistanceFilterForCurrentUser()
 			throws Exception {
-		
 
 		FilterDTO filterDTO = new FilterDTO();
 		filterDTO.setDistanceLimit("200");
 
-		
-
 		List<MatchDTO> matches = filterData
 				.retrieveMatchesForCurrentUser(currentUser, filterDTO);
 		assertEquals(16, matches.size());
-		
 
-		 filterDTO = new FilterDTO();
+		filterDTO = new FilterDTO();
 		filterDTO.setDistanceLimit("100");
-
-		
 
 		matches = filterData.retrieveMatchesForCurrentUser(currentUser,
 				filterDTO);
@@ -228,7 +236,7 @@ public class FilterDataTest {
 		filterDTO.setIsFavourite("yes");
 		filterDTO.setLowerLimitHeight("140");
 		filterDTO.setUpperLimitHeight("200");
-		
+
 		List<MatchDTO> matches = filterData
 				.retrieveMatchesForCurrentUser(currentUser, filterDTO);
 		assertEquals(3, matches.size());
@@ -238,7 +246,7 @@ public class FilterDataTest {
 	@Test
 	public void shouldInsertUsersAndVerifyMatchesWithAnotherCombinationOfFilters()
 			throws Exception {
-		
+
 		FilterDTO filterDTO = new FilterDTO();
 		filterDTO.setHasPhoto("yes");
 		filterDTO.setHasContactsExchanged("yes");
@@ -246,16 +254,29 @@ public class FilterDataTest {
 		filterDTO.setLowerLimitHeight("140");
 		filterDTO.setUpperLimitHeight("200");
 		filterDTO.setDistanceLimit("200");
-		
 
-		
 		List<MatchDTO> matches = filterData
 				.retrieveMatchesForCurrentUser(currentUser, filterDTO);
 		assertEquals(2, matches.size());
 
 	}
 
-	private static User setUpDataForFilteringTestsAndReturnFirstUser()
+	@Test
+	public void shouldInsertUsersAndVerifyMatchesWithoutPhotoAndFavourite()
+			throws Exception {
+
+		FilterDTO filterDTO = new FilterDTO();
+		filterDTO.setHasPhoto("no");
+
+		filterDTO.setIsFavourite("yes");
+
+		List<MatchDTO> matches = filterData
+				.retrieveMatchesForCurrentUser(currentUser, filterDTO);
+		assertEquals(1, matches.size());
+
+	}
+
+	private User setUpDataForFilteringTestsAndReturnFirstUser()
 			throws Exception {
 
 		loadData.initializeData();

@@ -1,17 +1,25 @@
 package com.filteredmatches.service;
 
-import com.filteredmatches.data.LoadData;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
-public class InitialDataSetupService {
+import com.filteredmatches.data.ILoadData;
+
+@Service("initialSetup")
+public class InitialDataSetupService implements IInitialDataSetupService {
+
+	@Autowired
+	@Qualifier("loadData")
+	private ILoadData loadData;
 	
 	
-	LoadData loadData = new LoadData();
-	public void loadDataFromJsonIntoDatabase() throws Exception{
+	public void loadDataFromJsonIntoDatabase() throws Exception {
 		loadData.initializeData();
 	}
 	public void deleteDataFromDatabase() throws Exception {
 		loadData.deleteTable();
-		
+
 	}
 
 }

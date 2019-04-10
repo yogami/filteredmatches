@@ -1,13 +1,18 @@
 package com.filteredmatches.service;
 
-import com.filteredmatches.data.UserData;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
+import com.filteredmatches.data.IUserData;
 import com.filteredmatches.model.User;
 
-public class UserService {
+@Service("userService")
+public class UserService implements IUserService {
 
-	
-	//TODO: annotate this
-	UserData userData = new UserData();
+	@Autowired
+	@Qualifier("userData")
+	IUserData userData;
 
 	public User getCurrentUserById(Integer userId) throws Exception {
 

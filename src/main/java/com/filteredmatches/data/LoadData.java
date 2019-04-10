@@ -6,9 +6,14 @@ import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Repository;
+
 import com.filteredmatches.model.User;
 
-public class LoadData extends BaseData {
+@Repository("loadData")
+public class LoadData extends BaseData implements ILoadData {
 
 	private static final String CREATE_TABLE_SQL = "create table USERS(ID IDENTITY , DISPLAY_NAME NVARCHAR(64) , "
 			+ "AGE INT , JOB_TITLE VARCHAR(256) , HEIGHT_IN_CM INT , CITY_NAME NVARCHAR(64) , "
@@ -23,15 +28,17 @@ public class LoadData extends BaseData {
 	private static final String SELECT_ALL_USERS_SQL = "SELECT * FROM  USERS";
 
 	private static final String DROP_TABLE_USERS = "DROP TABLE USERS";
-
 	
-	private ReadJsonData readJsonData = new ReadJsonData();
-
-	//TODO: separate reading JSON, creating DDL and inserting DDL
 	
+
+	@Autowired
+	@Qualifier("readJson")
+	private IReadSourceData readJsonData;
+	// TODO: separate reading JSON, creating DDL and inserting DDL
+
 	public boolean initializeData() throws Exception {
 
-		List<User> users = readJsonData.getUserListFromJsonFile();
+		List<User> users = readJsonData.getUserListFromSpecifiedSource();
 		boolean success = createDDL();
 		if (success)
 			success = insertUsers(users);
@@ -41,9 +48,17 @@ public class LoadData extends BaseData {
 	private boolean createDDL() throws Exception {
 
 		Statement st = con.createStatement();
+		
+		
+		try {
+			 st.executeQuery(SELECT_ALL_USERS_SQL);
+			 return false;
+		} catch (Exception ex) {
+			 //table doesn't exist so go ahead and create below
+		}
 		st.executeUpdate(CREATE_TABLE_SQL);
 
-		ResultSet rs = st.executeQuery(SELECT_ALL_USERS_SQL);
+		ResultSet rs  = st.executeQuery(SELECT_ALL_USERS_SQL);
 		ResultSetMetaData rsmd = rs.getMetaData();
 		return rsmd.getColumnCount() > 1;
 

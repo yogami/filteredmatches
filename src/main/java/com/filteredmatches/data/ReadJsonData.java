@@ -4,16 +4,19 @@ import java.io.File;
 import java.util.List;
 import java.util.Scanner;
 
+import org.springframework.stereotype.Component;
+
 import com.filteredmatches.model.User;
 import com.filteredmatches.model.Users;
 import com.google.gson.Gson;
 
-public class ReadJsonData {
+@Component("readJson")
+public class ReadJsonData implements IReadSourceData{
 	
 	//TODO: the file name is hard coded here. It should be passed to this class from elsewhere so that 
 	//so that this class becomes rusable and is not bound to a particular json file.
 	private static final String JSON_FILE_NAME = "users.json";
-	public List<User> getUserListFromJsonFile() throws Exception {
+	public List<User> getUserListFromSpecifiedSource() throws Exception {
 
 		StringBuilder result = new StringBuilder("");
 

@@ -1,14 +1,16 @@
 package com.filteredmatches.data;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.springframework.stereotype.Repository;
+
 import com.filteredmatches.model.City;
 import com.filteredmatches.model.User;
 
-public class UserData extends BaseData {
+@Repository("userData")
+public class UserData extends BaseData implements IUserData {
 	
 	private static final String SELECT_CURRENT_USER_SQL = "SELECT * FROM USERS WHERE ID = ?";
 	

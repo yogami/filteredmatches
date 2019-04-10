@@ -9,6 +9,11 @@ public class FilterDTO {
 	String lowerLimitAge;
 	String upperLimitAge;
 	String isFavourite;
+
+	String lowerLimitHeight;
+	String upperLimitHeight;
+	String hasContactsExchanged;
+	
 	public String getIsFavourite() {
 		return isFavourite;
 	}
@@ -29,10 +34,6 @@ public class FilterDTO {
 	}
 
 
-	String lowerLimitHeight;
-	String upperLimitHeight;
-	String hasContactsExchanged;
-	
 
 	public String getLowerLimitAge() {
 		return lowerLimitAge;
