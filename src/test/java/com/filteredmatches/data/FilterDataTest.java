@@ -1,4 +1,4 @@
-package com.filteredmatches.integration;
+package com.filteredmatches.data;
 
 import static org.junit.Assert.assertEquals;
 
