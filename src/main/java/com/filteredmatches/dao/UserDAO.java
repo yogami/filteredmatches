@@ -10,7 +10,7 @@ import com.filteredmatches.model.City;
 import com.filteredmatches.model.User;
 
 @Repository("userData")
-public class UserData extends BaseData implements IUserData {
+public class UserDAO extends BaseDAO implements IUserDAO {
 	
 	private static final String SELECT_CURRENT_USER_SQL = "SELECT * FROM USERS WHERE ID = ?";
 	

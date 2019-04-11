@@ -3,11 +3,11 @@ package com.filteredmatches.dao;
 import java.sql.Connection;
 
 
-public abstract class BaseData {
+public abstract class BaseDAO {
 
 	protected Connection con;
 
-	public BaseData() {
+	public BaseDAO() {
 		try {
 			con = ConnectionPool.getInstance().getConnection();
 		} catch (Exception ex) {

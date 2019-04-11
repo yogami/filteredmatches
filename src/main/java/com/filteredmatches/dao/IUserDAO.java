@@ -4,7 +4,7 @@ import java.sql.SQLException;
 
 import com.filteredmatches.model.User;
 
-public interface IUserData {
+public interface IUserDAO {
 	
 	public User retrieveCurrentuser(Integer userId) throws SQLException;
 

@@ -13,7 +13,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.filteredmatches.config.AppConfig;
-import com.filteredmatches.dao.IReadSourceData;
+import com.filteredmatches.dao.IReadSourceDAO;
 import com.filteredmatches.model.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -23,7 +23,7 @@ public class ReadJsonDataTest {
 	//class under test
 	@Autowired
 	@Qualifier("readJson")
-	private IReadSourceData readJsonData;
+	private IReadSourceDAO readJsonData;
 	
 	@Test
 	public void shouldVerifyIfJsonHasBeenConvertedIntoListOfObjects()

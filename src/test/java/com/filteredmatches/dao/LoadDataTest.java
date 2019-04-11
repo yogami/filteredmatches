@@ -10,7 +10,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.filteredmatches.config.AppConfig;
-import com.filteredmatches.dao.ILoadData;
+import com.filteredmatches.dao.ILoadDAO;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {AppConfig.class})
@@ -20,7 +20,7 @@ public class LoadDataTest {
 	// class under test
 	@Autowired
 	@Qualifier("loadData")
-	private ILoadData loadData;
+	private ILoadDAO loadData;
 
 	@Test
 	public void shouldVerifyIfTableStructureHasBeenCreated() throws Exception {

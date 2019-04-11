@@ -16,7 +16,7 @@ import com.filteredmatches.model.User;
 
 
 @Repository("filterData")
-public class FilterData extends BaseData implements IFilterData {
+public class FilterDAO extends BaseDAO implements IFilterDAO {
 
 	@Autowired
 	@Qualifier("filtermatchesSqlCreator")

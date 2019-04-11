@@ -14,9 +14,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.filteredmatches.config.AppConfig;
-import com.filteredmatches.dao.IFilterData;
-import com.filteredmatches.dao.ILoadData;
-import com.filteredmatches.dao.IUserData;
+import com.filteredmatches.dao.IFilterDAO;
+import com.filteredmatches.dao.ILoadDAO;
+import com.filteredmatches.dao.IUserDAO;
 import com.filteredmatches.dto.FilterDTO;
 import com.filteredmatches.dto.MatchDTO;
 import com.filteredmatches.model.City;
@@ -29,18 +29,18 @@ public class FilterDataTest {
 	// need this as a utility to setup data first
 	@Autowired
 	@Qualifier("loadData")
-	private ILoadData loadData;
+	private ILoadDAO loadData;
 
 	// need this to retrieve current User
 
 	@Autowired
 	@Qualifier("userData")
-	private IUserData userData;
+	private IUserDAO userData;
 
 	// class under test
 	@Autowired
 	@Qualifier("filterData")
-	private IFilterData filterData;
+	private IFilterDAO filterData;
 
 	private User currentUser;
 

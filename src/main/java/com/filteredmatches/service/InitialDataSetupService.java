@@ -4,14 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import com.filteredmatches.dao.ILoadData;
+import com.filteredmatches.dao.ILoadDAO;
 
 @Service("initialSetup")
 public class InitialDataSetupService implements IInitialDataSetupService {
 
 	@Autowired
 	@Qualifier("loadData")
-	private ILoadData loadData;
+	private ILoadDAO loadData;
 	
 	
 	public void loadDataFromJsonIntoDatabase() throws Exception {

@@ -11,7 +11,7 @@ import com.filteredmatches.model.Users;
 import com.google.gson.Gson;
 
 @Component("readJson")
-public class ReadJsonData implements IReadSourceData{
+public class ReadJsonDAO implements IReadSourceDAO{
 	
 	//TODO: the file name is hard coded here. It should be passed to this class from elsewhere so that 
 	//so that this class becomes rusable and is not bound to a particular json file.

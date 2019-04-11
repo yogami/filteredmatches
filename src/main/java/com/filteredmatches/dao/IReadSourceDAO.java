@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.filteredmatches.model.User;
 
-public interface IReadSourceData {
+public interface IReadSourceDAO {
 	
 	public List<User> getUserListFromSpecifiedSource() throws Exception;
 

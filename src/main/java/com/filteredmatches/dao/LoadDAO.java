@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 import com.filteredmatches.model.User;
 
 @Repository("loadData")
-public class LoadData extends BaseData implements ILoadData {
+public class LoadDAO extends BaseDAO implements ILoadDAO {
 
 	private static final String CREATE_TABLE_SQL = "create table USERS(ID IDENTITY , DISPLAY_NAME NVARCHAR(64) , "
 			+ "AGE INT , JOB_TITLE VARCHAR(256) , HEIGHT_IN_CM INT , CITY_NAME NVARCHAR(64) , "
@@ -33,7 +33,7 @@ public class LoadData extends BaseData implements ILoadData {
 
 	@Autowired
 	@Qualifier("readJson")
-	private IReadSourceData readJsonData;
+	private IReadSourceDAO readJsonData;
 	// TODO: separate reading JSON, creating DDL and inserting DDL
 
 	public boolean initializeData() throws Exception {
