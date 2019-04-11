@@ -118,13 +118,13 @@
 	     //if(!this.main_photo || this.main_photo == ''){ this.main_photo="/images/no_photo_available.png";}
 	     resultsHtml +=  "<div class=\"container\">"+
 	      "<div class=\"row\" style=\" margin-top: 50px;\">"+
-	          "<div class=\"col-sm-5\">"+
+	         "<div class=\"col-sm-4\">"+
 	            "<div class=\"card\">"+
 	               "<img src=\""+this.main_photo+"\" alt=\"\">"+
 	               
 	            "</div>"+
 	         "</div>"+
-	         "<div class=\"col-sm-7\">"+
+	         "<div class=\"col-sm-8\">"+
 	            "<div class=\"card\">"+
 	               
 	               "<div class=\"card-body\">"+
@@ -141,7 +141,7 @@
 	               "</div>"+
 	            "</div>"+
 	         "</div>"+
-	        
+	         
 	      "</div>"+
 	       "<div class=\"row\">"+
 	          "<div class=\"col-sm-12\">"+
