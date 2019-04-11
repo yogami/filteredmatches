@@ -112,7 +112,7 @@
 		});
 	}
 	function renderPage(data){
-	     $("#filteredResults").empty();
+	     $("#matchResults").empty();
 	     var resultsHtml = '';
 	     $.each(data,function(){
 	     //if(!this.main_photo || this.main_photo == ''){ this.main_photo="/images/no_photo_available.png";}
