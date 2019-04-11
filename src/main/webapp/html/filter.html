@@ -1,4 +1,4 @@
- <div class="jumbotron  sticky-top" >
+ <div id="jumbo" class="jumbotron  sticky-top" >
          <button data-toggle="collapse" data-target="#filterCriteria" aria-expanded="false">Show/Hide filter</button>
          <div id="filterCriteria" class="container collapse">
                <div class="row">
@@ -54,9 +54,8 @@
 		                         <div class="row">
 		                            <div class="col-sm-12">
 				                       <div class="d-flex justify-content-left my-4">
-										 
-										    <span class="font-weight-bold indigo-text mr-2 mt-1">30 km</span>
-										
+										  <input type="text" id="distanceTextInput" value="30 km" readonly size="6">
+	                               
 										    <input name="distance_filter" value="300" class="border-0" type="range" min="30" max="300" data-show-value="true" 
 										    onchange="updateDistanceText(this.value)" > 
 										   
@@ -66,11 +65,7 @@
 										</div>
 								    </div>
 								 </div>
-								 <div class="row">
-	                                 <div class="col-sm-12 text-left">
-	                                      <input type="text" id="distanceTextInput" value="" readonly size="6">
-	                                 </div>
-	                             </div>
+								
 						  </div>
 	                   </div>
 	           </div>
