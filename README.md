@@ -7,7 +7,11 @@ Then navigate to the location of the pom.xml and run
 
 # mvn clean install
 
-Once the filtered matches jar file is created then run the command
+Once the filtered matches jar file is created then run the command. This will also run the tests before the jar is compiled
+
+# mvn test
+
+This will run the tests and generate a report
 
 # mvn exec:java -Dexec.args="start"
 
