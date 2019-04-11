@@ -13,7 +13,7 @@ Once the filtered matches jar file is created then run the command
 
 This should start the app
 
-Navigate to the url # <your_server_url>:8080/matches/1 (eg: http://localhost:8080/matches/1)
+Navigate to the url # <your_server_url>:8080/matches/<user_id> (eg: http://localhost:8080/matches/1)
 where you can use 1 to 25 as one of the userIds
 
 and the matches page should load.
