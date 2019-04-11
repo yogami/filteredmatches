@@ -21,3 +21,21 @@ and the matches page should load.
 # Cntrl C
 
 on that window should stop the server
+
+
+# TODO list
+//get double range slider working
+
+//clarify range requirement
+
+
+//configure hibernate and then the appropriate design pattern for filtering (criteria + restrictions) This would be much cleaner than what is now
+
+//configure logger
+
+//load hardcoded values from properties file
+
+//decouple db so that it is easily replaceable
+
+//custom exceptions
+
