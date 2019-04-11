@@ -18,6 +18,8 @@ where you can use 1 to 25 as one of the userIds
 
 and the matches page should load.
 
+It will load on your smart phone/ipad/etc. as long as it is in the same network ( for wifi you need to know your IP address and type that instead of localhost). The default results page loads without hte filter. YOu have to explicitly show/hide filter using the button on the top left corner
+
 # Cntrl C
 
 on that window should stop the server
