@@ -21,10 +21,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.util.StringUtils;
 
 import com.filteredmatches.MainApp;
 import com.filteredmatches.config.AppConfig;
+import com.filteredmatches.dto.FilterDTO;
 import com.filteredmatches.service.IInitialDataSetupService;
+import com.google.gson.Gson;
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.JsonNode;
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {AppConfig.class})
@@ -40,13 +47,16 @@ public class FilteredMatchesWebTest {
 																// InitialDataSetupService();
 	@Before
 	public void setUp() throws Exception {
+		
+	
 
-		// try {
-		// initialDataSetupService.deleteDataFromDatabase();
-		// } catch (Exception ex) {
-		//
-		// }
+		 try {
+		 initialDataSetupService.deleteDataFromDatabase();
+		 } catch (Exception ex) {
+		
+		 }
 		MainApp.startOrStopApp("start");
+		initialDataSetupService.loadDataFromJsonIntoDatabase();
 
 	}
 
@@ -58,34 +68,51 @@ public class FilteredMatchesWebTest {
 		assertTrue(pageSource.contains("<div id=\"matchResults\">"));
 	}
 
-
-
+	
+	
+	
 	@Test
-	@Ignore
-	public void shouldRenderAllMatchsOnInitialPageLoad() throws Exception {
-		WebDriver client = new HtmlUnitDriver();
-		
-
-		client.get(MainApp.getServerURI() + MATCHES_URL + USER_ID);
-		ExpectedCondition<Boolean> pageLoadCondition = new ExpectedCondition<Boolean>() {
-			public Boolean apply(WebDriver driver) {
-				return ((JavascriptExecutor) driver)
-						.executeScript("return document.readyState")
-						.equals("complete");
-			}
-		};
-		WebDriverWait wait = new WebDriverWait(client, 5);
-		wait.until(pageLoadCondition);
-		List<WebElement> elements = client
-				.findElements(By.cssSelector(".card"));
-		assertEquals(24, elements.size());
-
+	public void shouldReturnAllResultsWithoutFilterForAPIcall() throws Exception {
+		FilterDTO filterDTO = new FilterDTO();
+		verifyIfTheStatedNumberOfRecordsWereLoadedForTheFilterCriteria(24,
+				filterDTO );
 	}
+	
+	
+	@Test
+	public void shouldReturnAllResultsWithPhotoFilterForAPIcall() throws Exception {
+		FilterDTO filterDTO = new FilterDTO();
+		filterDTO.setHasPhoto("yes");
+		verifyIfTheStatedNumberOfRecordsWereLoadedForTheFilterCriteria(21,
+				filterDTO );
+	}
+	
+	
+
+	private void verifyIfTheStatedNumberOfRecordsWereLoadedForTheFilterCriteria(int numberOfRecordsToVerify,
+			FilterDTO filterDTO) throws UnirestException {
+		Gson gson = new Gson();
+		String postBody = gson.toJson(filterDTO);
+		HttpResponse<JsonNode> response = Unirest
+				.post(MainApp.getServerURI() + API_MATCHES_URL + USER_ID)
+				.header("accept", "application/json")
+				.header("Content-Type", "application/json").body(postBody)
+				.asJson();
+
+		JsonNode jsonNode = response.getBody();
+
+		assertEquals(numberOfRecordsToVerify, StringUtils.countOccurrencesOf(jsonNode.toString(),
+				"display_name"));
+	}
+
+
+	
 
 	@After
 	public void tearDown() throws Exception {
 		MainApp.startOrStopApp("stop");
-		// initialDataSetupService.deleteDataFromDatabase();
+		initialDataSetupService.deleteDataFromDatabase();
+		
 	}
 
 }
