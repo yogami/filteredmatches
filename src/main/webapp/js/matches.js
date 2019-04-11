@@ -117,8 +117,13 @@
 	     $.each(data,function(){
 	     //if(!this.main_photo || this.main_photo == ''){ this.main_photo="/images/no_photo_available.png";}
 	     resultsHtml +=  "<div class=\"container\">"+
-	      "<div class=\"row\">"+
-	         
+	      "<div class=\"row\" style=\" margin-top: 50px;\">"+
+	          "<div class=\"col-sm-5\">"+
+	            "<div class=\"card\">"+
+	               "<img src=\""+this.main_photo+"\" alt=\"\">"+
+	               
+	            "</div>"+
+	         "</div>"+
 	         "<div class=\"col-sm-7\">"+
 	            "<div class=\"card\">"+
 	               
@@ -136,13 +141,13 @@
 	               "</div>"+
 	            "</div>"+
 	         "</div>"+
-	         "<div class=\"col-sm-5\">"+
-	            "<div class=\"card\">"+
-	               "<img src=\""+this.main_photo+"\" alt=\"\">"+
-	               
-	            "</div>"+
-	         "</div>"+
+	        
 	      "</div>"+
+	       "<div class=\"row\">"+
+	          "<div class=\"col-sm-12\">"+
+	            
+	          "</div>"+
+	       "</div>"+
       "</div>"
       
       
