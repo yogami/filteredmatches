@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import com.filteredmatches.data.ILoadData;
+import com.filteredmatches.dao.ILoadData;
 
 @Service("initialSetup")
 public class InitialDataSetupService implements IInitialDataSetupService {

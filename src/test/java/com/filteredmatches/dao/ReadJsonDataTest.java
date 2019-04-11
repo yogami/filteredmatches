@@ -1,4 +1,4 @@
-package com.filteredmatches.data;
+package com.filteredmatches.dao;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -13,6 +13,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.filteredmatches.config.AppConfig;
+import com.filteredmatches.dao.IReadSourceData;
 import com.filteredmatches.model.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)

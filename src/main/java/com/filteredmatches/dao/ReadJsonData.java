@@ -1,4 +1,4 @@
-package com.filteredmatches.data;
+package com.filteredmatches.dao;
 
 import java.io.File;
 import java.util.List;

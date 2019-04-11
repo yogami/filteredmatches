@@ -1,4 +1,4 @@
-package com.filteredmatches.data;
+package com.filteredmatches.dao;
 
 import org.h2.util.StringUtils;
 import org.springframework.stereotype.Component;

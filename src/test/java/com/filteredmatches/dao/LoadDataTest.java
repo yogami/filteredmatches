@@ -1,4 +1,4 @@
-package com.filteredmatches.data;
+package com.filteredmatches.dao;
 
 import static org.junit.Assert.assertTrue;
 
@@ -10,7 +10,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.filteredmatches.config.AppConfig;
-import com.filteredmatches.data.ILoadData;
+import com.filteredmatches.dao.ILoadData;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {AppConfig.class})

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import com.filteredmatches.data.IFilterData;
+import com.filteredmatches.dao.IFilterData;
 import com.filteredmatches.dto.FilterDTO;
 import com.filteredmatches.dto.MatchDTO;
 import com.filteredmatches.model.User;

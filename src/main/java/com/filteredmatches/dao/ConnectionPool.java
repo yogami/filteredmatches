@@ -1,4 +1,4 @@
-package com.filteredmatches.data;
+package com.filteredmatches.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

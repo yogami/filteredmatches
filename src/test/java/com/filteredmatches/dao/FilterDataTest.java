@@ -1,4 +1,4 @@
-package com.filteredmatches.data;
+package com.filteredmatches.dao;
 
 import static org.junit.Assert.assertEquals;
 
@@ -14,9 +14,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.filteredmatches.config.AppConfig;
-import com.filteredmatches.data.IFilterData;
-import com.filteredmatches.data.ILoadData;
-import com.filteredmatches.data.IUserData;
+import com.filteredmatches.dao.IFilterData;
+import com.filteredmatches.dao.ILoadData;
+import com.filteredmatches.dao.IUserData;
 import com.filteredmatches.dto.FilterDTO;
 import com.filteredmatches.dto.MatchDTO;
 import com.filteredmatches.model.City;
