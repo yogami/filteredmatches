@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import com.filteredmatches.dto.FilterDTO;
 import com.filteredmatches.model.User;
 
+//This file will become totally unnecessary if hibernate were used. Then we can use criteria/resitrictions for filters.
 @Component("filtermatchesSqlCreator")
 public class FilterMatchesSqlCreator {
 

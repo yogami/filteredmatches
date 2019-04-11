@@ -5,6 +5,10 @@ import java.sql.DriverManager;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+ * This is a singleton connection pool class. Well the actual pool is not implemented yet
+ * But the intent is to make this a pool
+ */
 public class ConnectionPool {
 
 	//TODO: read this from a property file somewhere
