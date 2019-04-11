@@ -18,7 +18,7 @@ import com.filteredmatches.model.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {AppConfig.class})
-public class ReadJsonDataTest {
+public class ReadJsonDaAOest {
 	
 	//class under test
 	@Autowired

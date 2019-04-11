@@ -14,7 +14,7 @@ import com.filteredmatches.dao.ILoadDAO;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {AppConfig.class})
-public class LoadDataTest {
+public class LoadDAOTest {
 
 	// class under test
 	// class under test

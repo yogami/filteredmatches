@@ -24,7 +24,7 @@ import com.filteredmatches.model.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {AppConfig.class})
-public class FilterDataTest {
+public class FilterDAOTest {
 
 	// need this as a utility to setup data first
 	@Autowired
@@ -53,13 +53,9 @@ public class FilterDataTest {
 		loadData.deleteTable();
 	}
 
+	
 	@Test
-	public void shouldRetrieveCurrentUser() throws Exception {
-		User currentUser = userData.retrieveCurrentuser(1);
-		assertEquals("Caroline", currentUser.getDisplay_name());
-	}
-	@Test
-	public void shouldInsertUsersAndVerifyTheMatchesForCurrentUserWithNoFilters()
+	public void shouldVerifyTheMatchesForCurrentUserWithNoFilters()
 			throws Exception {
 
 		List<MatchDTO> matches = filterData
@@ -69,7 +65,7 @@ public class FilterDataTest {
 	}
 
 	@Test
-	public void shouldInsertUsersAndVerifyTheMatchesWithNoPhotoForCurrentUser()
+	public void shouldVerifyTheMatchesWithNoPhotoForCurrentUser()
 			throws Exception {
 
 		FilterDTO filterDTO = new FilterDTO();
@@ -82,7 +78,7 @@ public class FilterDataTest {
 	}
 
 	@Test
-	public void shouldInsertUsersAndVerifyTheMatchesWithPhotoForCurrentUser()
+	public void shouldVerifyTheMatchesWithPhotoForCurrentUser()
 			throws Exception {
 
 		FilterDTO filterDTO = new FilterDTO();
@@ -94,7 +90,7 @@ public class FilterDataTest {
 	}
 
 	@Test
-	public void shouldInsertUsersAndVerifyTheMatchesWithNoContactsExchangedForCurrentUser()
+	public void shouldVerifyTheMatchesWithNoContactsExchangedForCurrentUser()
 			throws Exception {
 		FilterDTO filterDTO = new FilterDTO();
 		filterDTO.setHasContactsExchanged("no");;
@@ -106,7 +102,7 @@ public class FilterDataTest {
 	}
 
 	@Test
-	public void shouldInsertUsersAndVerifyTheMatchesWithContactsExchangedForCurrentUser()
+	public void shouldVerifyTheMatchesWithContactsExchangedForCurrentUser()
 			throws Exception {
 		FilterDTO filterDTO = new FilterDTO();
 		filterDTO.setHasContactsExchanged("yes");
@@ -118,7 +114,7 @@ public class FilterDataTest {
 	}
 
 	@Test
-	public void shouldInsertUsersAndVerifyMatchesWhichAreNotFavoriteForCurrentUser()
+	public void shouldVerifyMatchesWhichAreNotFavoriteForCurrentUser()
 			throws Exception {
 		FilterDTO filterDTO = new FilterDTO();
 		filterDTO.setIsFavourite("no");
@@ -130,7 +126,7 @@ public class FilterDataTest {
 	}
 
 	@Test
-	public void shouldInsertUsersAndVerifyMatchesWhichAreFavoriteForCurrentUser()
+	public void shouldVerifyMatchesWhichAreFavoriteForCurrentUser()
 			throws Exception {
 		FilterDTO filterDTO = new FilterDTO();
 		filterDTO.setIsFavourite("yes");
@@ -142,7 +138,7 @@ public class FilterDataTest {
 	}
 
 	@Test
-	public void shouldInsertUsersAndVerifyMatchesWithCompatibilityScoreRangeForCurrentUser()
+	public void shouldVerifyMatchesWithCompatibilityScoreRangeForCurrentUser()
 			throws Exception {
 		FilterDTO filterDTO = new FilterDTO();
 		filterDTO.setLowerLimitCompatibility("0.75");
@@ -152,18 +148,12 @@ public class FilterDataTest {
 				.retrieveMatchesForCurrentUser(currentUser, filterDTO);
 		assertEquals(21, matches.size());
 
-		filterDTO = new FilterDTO();
-		filterDTO.setLowerLimitCompatibility("0.01");
-		filterDTO.setUpperLimitCompatibility("0.75");
-
-		matches = filterData.retrieveMatchesForCurrentUser(currentUser,
-				filterDTO);
-		assertEquals(3, matches.size());
+		
 
 	}
 
 	@Test
-	public void shouldInsertUsersAndVerifyMatchesWithAgeFilterForCurrentUser()
+	public void shouldVerifyMatchesWithAgeFilterForCurrentUser()
 			throws Exception {
 
 		FilterDTO filterDTO = new FilterDTO();
@@ -174,18 +164,12 @@ public class FilterDataTest {
 				.retrieveMatchesForCurrentUser(currentUser, filterDTO);
 		assertEquals(2, matches.size());
 
-		filterDTO = new FilterDTO();
-		filterDTO.setLowerLimitAge("36");
-		filterDTO.setUpperLimitAge("95");
-
-		matches = filterData.retrieveMatchesForCurrentUser(currentUser,
-				filterDTO);
-		assertEquals(22, matches.size());
+		
 
 	}
 
 	@Test
-	public void shouldInsertUsersAndVerifyMatchesWithHeightFilterForCurrentUser()
+	public void shouldVerifyMatchesWithHeightFilterForCurrentUser()
 			throws Exception {
 
 		FilterDTO filterDTO = new FilterDTO();
@@ -196,18 +180,12 @@ public class FilterDataTest {
 				.retrieveMatchesForCurrentUser(currentUser, filterDTO);
 		assertEquals(15, matches.size());
 
-		filterDTO = new FilterDTO();
-		filterDTO.setLowerLimitHeight("161");
-		filterDTO.setUpperLimitHeight("210");
-
-		matches = filterData.retrieveMatchesForCurrentUser(currentUser,
-				filterDTO);
-		assertEquals(9, matches.size());
+		
 
 	}
 
 	@Test
-	public void shouldInsertUsersAndVerifyMatchesWithDistanceFilterForCurrentUser()
+	public void shouldVerifyMatchesWithDistanceFilterForCurrentUser()
 			throws Exception {
 
 		FilterDTO filterDTO = new FilterDTO();
@@ -217,52 +195,13 @@ public class FilterDataTest {
 				.retrieveMatchesForCurrentUser(currentUser, filterDTO);
 		assertEquals(16, matches.size());
 
-		filterDTO = new FilterDTO();
-		filterDTO.setDistanceLimit("100");
-
-		matches = filterData.retrieveMatchesForCurrentUser(currentUser,
-				filterDTO);
-		assertEquals(2, matches.size());
+		
 
 	}
 
+	
 	@Test
-	public void shouldInsertUsersAndVerifyMatchesWithACombinationOfFilters()
-			throws Exception {
-
-		FilterDTO filterDTO = new FilterDTO();
-		filterDTO.setHasPhoto("yes");
-		filterDTO.setHasContactsExchanged("yes");
-		filterDTO.setIsFavourite("yes");
-		filterDTO.setLowerLimitHeight("140");
-		filterDTO.setUpperLimitHeight("200");
-
-		List<MatchDTO> matches = filterData
-				.retrieveMatchesForCurrentUser(currentUser, filterDTO);
-		assertEquals(3, matches.size());
-
-	}
-
-	@Test
-	public void shouldInsertUsersAndVerifyMatchesWithAnotherCombinationOfFilters()
-			throws Exception {
-
-		FilterDTO filterDTO = new FilterDTO();
-		filterDTO.setHasPhoto("yes");
-		filterDTO.setHasContactsExchanged("yes");
-		filterDTO.setIsFavourite("yes");
-		filterDTO.setLowerLimitHeight("140");
-		filterDTO.setUpperLimitHeight("200");
-		filterDTO.setDistanceLimit("200");
-
-		List<MatchDTO> matches = filterData
-				.retrieveMatchesForCurrentUser(currentUser, filterDTO);
-		assertEquals(2, matches.size());
-
-	}
-
-	@Test
-	public void shouldInsertUsersAndVerifyMatchesWithoutPhotoAndFavourite()
+	public void shouldVerifyMatchesWithoutPhotoAndFavourite()
 			throws Exception {
 
 		FilterDTO filterDTO = new FilterDTO();
