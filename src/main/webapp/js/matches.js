@@ -5,6 +5,7 @@
         getMatches(data);
         
         $("#filter_button").click(function(){
+           toggleFilter();
            var data = {};
            renderHasPhotoFilter(data);
 		   renderIsFavouriteFilter(data);
@@ -112,6 +113,7 @@
 		});
 	}
 	function renderPage(data){
+	
 	     $("#matchResults").empty();
 	     var resultsHtml = '';
 	     $.each(data,function(){
@@ -156,9 +158,14 @@
 	     
 	     $("#matchResults").html(resultsHtml);
 	     
+	     
 	}
 	
 	function updateDistanceText(val) {
           $("#distanceTextInput").val(val+" km"); 
+    }
+    
+    function toggleFilter(){
+          $("#filterCriteria").toggle();
     }
 
