@@ -17,6 +17,7 @@ import com.filteredmatches.dto.FilterDTO;
 import com.filteredmatches.dto.MatchDTO;
 import com.filteredmatches.service.IFilterMatchesService;
 import com.filteredmatches.service.IInitialDataSetupService;
+import com.filteredmatches.service.IReligionService;
 
 
 
@@ -32,8 +33,12 @@ public class FilteredMatchesController {
 	private IInitialDataSetupService initialDataSetupService;
 
 	@Autowired
-	@Qualifier("matchesService")
+	
 	private IFilterMatchesService filterMatchesService;
+	
+	@Autowired
+	
+	private IReligionService religionService;
 
 	// this is only neeeded when the page loads for the first time to locate the
 	// view
@@ -43,9 +48,11 @@ public class FilteredMatchesController {
 	public ModelAndView matches(@PathVariable("id") Integer userId,
 			ModelMap modelMap) throws Exception {
 		initialDataSetupService.loadDataFromJsonIntoDatabase();
+		List<String> religions = religionService.getReligions();
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("matches");
 		modelMap.addAttribute("id", userId);
+		modelMap.addAttribute("religions", religions);
 		modelAndView.addAllObjects(modelMap);
 		return modelAndView;
 

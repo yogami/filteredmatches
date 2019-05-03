@@ -53,7 +53,6 @@ public class FilterDAOTest {
 		loadData.deleteTable();
 	}
 
-	
 	@Test
 	public void shouldVerifyTheMatchesForCurrentUserWithNoFilters()
 			throws Exception {
@@ -148,8 +147,6 @@ public class FilterDAOTest {
 				.retrieveMatchesForCurrentUser(currentUser, filterDTO);
 		assertEquals(21, matches.size());
 
-		
-
 	}
 
 	@Test
@@ -163,8 +160,6 @@ public class FilterDAOTest {
 		List<MatchDTO> matches = filterData
 				.retrieveMatchesForCurrentUser(currentUser, filterDTO);
 		assertEquals(2, matches.size());
-
-		
 
 	}
 
@@ -180,8 +175,6 @@ public class FilterDAOTest {
 				.retrieveMatchesForCurrentUser(currentUser, filterDTO);
 		assertEquals(15, matches.size());
 
-		
-
 	}
 
 	@Test
@@ -195,14 +188,10 @@ public class FilterDAOTest {
 				.retrieveMatchesForCurrentUser(currentUser, filterDTO);
 		assertEquals(16, matches.size());
 
-		
-
 	}
 
-	
 	@Test
-	public void shouldVerifyMatchesWithoutPhotoAndFavourite()
-			throws Exception {
+	public void shouldVerifyMatchesWithoutPhotoAndFavourite() throws Exception {
 
 		FilterDTO filterDTO = new FilterDTO();
 		filterDTO.setHasPhoto("no");
@@ -214,6 +203,19 @@ public class FilterDAOTest {
 		assertEquals(1, matches.size());
 
 	}
+
+	@Test
+	public void shouldVerifyMatchesWithASpecificReligion() throws Exception {
+
+		FilterDTO filterDTO = new FilterDTO();
+		filterDTO.setReligion("Atheist");
+		List<MatchDTO> matches = filterData
+				.retrieveMatchesForCurrentUser(currentUser, filterDTO);
+		assertEquals(6, matches.size());
+		
+	}
+	
+	
 
 	private User setUpDataForFilteringTestsAndReturnFirstUser()
 			throws Exception {

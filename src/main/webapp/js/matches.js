@@ -14,11 +14,14 @@
 		   renderCompatibilityFilter(data); 
 		   renderAgeFilter(data);
 		   renderHeightFilter(data);
+		   renderReligionFilter(data);
 		   console.log("JSON.stringify(data)="+JSON.stringify(data));
            getMatches(data);
         });
        
   });
+      
+     
   
   function renderHasPhotoFilter(data){
            var hasPhoto = $("input[name='photo_filter']:checked").val();
@@ -45,6 +48,14 @@
 			   var upperLimitCompatibility = parseFloat(lowerLimitCompatibility) + 0.09;
 			   data["upperLimitCompatibility"] = upperLimitCompatibility;
 		   }
+  }
+  
+  function renderReligionFilter(data){
+	  var religion = $("#religion_filter option:selected").val();
+	  console.log("religion:"+religion);
+	  if(religion != ''){
+		  data["religion"] = religion;
+	  }
   }
   
   function renderDistanceFilter(data){
@@ -117,7 +128,8 @@
 	     $("#matchResults").empty();
 	     var resultsHtml = '';
 	     $.each(data,function(){
-	     //if(!this.main_photo || this.main_photo == ''){ this.main_photo="/images/no_photo_available.png";}
+	     // if(!this.main_photo || this.main_photo == ''){
+			// this.main_photo="/images/no_photo_available.png";}
 	     resultsHtml +=  "<div class=\"container\">"+
 	      "<div class=\"row\" style=\" margin-top: 50px;\">"+
 	         "<div class=\"col-sm-4\">"+

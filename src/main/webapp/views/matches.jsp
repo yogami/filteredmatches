@@ -16,7 +16,7 @@
    </head>
    <body>
    <input type="hidden"id="id" name="id" value="${id}"/>
-     <c:import url="/html/filter.html" />
+     <c:import url="/html/filter.jsp" />
       <div id="matchResults">
 	     
       </div>

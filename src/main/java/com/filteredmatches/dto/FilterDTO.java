@@ -13,6 +13,7 @@ public class FilterDTO {
 	String lowerLimitHeight;
 	String upperLimitHeight;
 	String hasContactsExchanged;
+	private String religion;
 	
 	public String getIsFavourite() {
 		return isFavourite;
@@ -112,6 +113,17 @@ public class FilterDTO {
 
 	public void setHasPhoto(String hasPhoto) {
 		this.hasPhoto = hasPhoto;
+	}
+
+
+	public void setReligion(String religion) {
+		this.religion= religion;
+		
+	}
+
+
+	public String getReligion() {
+		return religion;
 	}
 	
 

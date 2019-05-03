@@ -1,6 +1,7 @@
 package com.filteredmatches.controller;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
@@ -44,6 +45,20 @@ public class FilteredMatchesControllerTest {
 		ModelAndView mv = filteredMatchesController.matches(1, new ModelMap());
 		assertEquals( "matches",mv.getViewName());
 
+	}
+	
+	@Test
+	public void shouldReturnDistinctReligions() throws Exception {
+		ModelAndView mv = filteredMatchesController.matches(1, new ModelMap());
+		ModelMap modelMap = mv.getModelMap();
+		List<String>religions = (List<String>)modelMap.get("religions");
+		assertEquals(6,religions.size());
+		assertTrue(religions.contains("Islam"));
+		assertTrue(religions.contains("Atheist"));
+		assertTrue(religions.contains("Christian"));
+		assertTrue(religions.contains("Buddhist"));
+		assertTrue(religions.contains("Jewish"));
+		assertTrue(religions.contains("Agnostic"));
 	}
 
 	@Test

@@ -20,6 +20,7 @@ public class FilterMatchesSqlCreator {
 	private static final String LOWER_COMPATIBILITY_PARAMETER = ":lowerCompatibility";
 	private static final String UPPER_COMPATIBILITY_PARAMETER = ":upperCOmpatibility";
 	private static final String DISTANCE_PARAMETER = ":distance";
+	private static final String RELIGION_PARAMETER = ":religion";
 
 	private static final String SELECT_ALL_MATCHES_SQL = "SELECT *,( 3959 * acos( cos( radians("
 			+ LATITUDE_PARAMETER + ") ) "
@@ -35,6 +36,7 @@ public class FilterMatchesSqlCreator {
 	private static final String FILTER_WITH_HEIGHT = " AND HEIGHT_IN_CM >= "
 			+ LOWER_HEIGHT_PARAMETER + " AND HEIGHT_IN_CM <= "
 			+ UPPER_HEIGHT_PARAMETER;
+	private static final String FILTER_WITH_RELIGION = "AND RELIGION = ";
 	private static final String FILTER_WITHCOMPATIBILITY_SCORE = " AND COMPATIBILITY_SCORE >= "
 			+ LOWER_COMPATIBILITY_PARAMETER + " AND COMPATIBILITY_SCORE <= "
 			+ UPPER_COMPATIBILITY_PARAMETER;
@@ -44,8 +46,9 @@ public class FilterMatchesSqlCreator {
 	private static final String FILTER_WITHOUT_PHOTO = " AND (MAIN_PHOTO_URL is null or MAIN_PHOTO_URL = '') ";
 	private static final String FILTER_WITH_FAVOURITES = " AND FAVOURITE = TRUE";
 	private static final String FILTER_WITHOUT_FAVOURITES = " AND FAVOURITE = FALSE";
-	private static final String FILTER_WITH_DISTANCE_LESS_THAN = " WHERE U.distance < "+ DISTANCE_PARAMETER;
-			
+	private static final String FILTER_WITH_DISTANCE_LESS_THAN = " WHERE U.distance < "
+			+ DISTANCE_PARAMETER;
+
 	private static final String NO_FILTER_APPLIED = "";
 
 	public String createFilterSql(User currentUser, FilterDTO filterDTO) {
@@ -70,9 +73,19 @@ public class FilterMatchesSqlCreator {
 		if (filterDTO != null) {
 			selectSql = applyBooleanFilters(filterDTO, selectSql);
 			selectSql = applyRangeFilters(filterDTO, selectSql);
+			selectSql = applyReligionFilter(filterDTO, selectSql);
 			selectSql = formulateNewSqlFWithOuterTableonDistanceLimit(filterDTO,
 					selectSql);
 
+		}
+		return selectSql;
+	}
+
+	private String applyReligionFilter(FilterDTO filterDTO, String selectSql) {
+		if (!StringUtils.isNullOrEmpty(filterDTO.getReligion())) {
+			selectSql += this.FILTER_WITH_RELIGION + this.RELIGION_PARAMETER;
+			selectSql = selectSql.replace(this.RELIGION_PARAMETER,"'"+
+					filterDTO.getReligion()+"'");
 		}
 		return selectSql;
 	}
@@ -109,18 +122,17 @@ public class FilterMatchesSqlCreator {
 				filterDTO.getUpperLimitCompatibility(),
 				FILTER_WITHCOMPATIBILITY_SCORE, LOWER_COMPATIBILITY_PARAMETER,
 				UPPER_COMPATIBILITY_PARAMETER);
-		selectSql = getRangeSql(selectSql,
-				filterDTO.getLowerLimitAge(), filterDTO.getUpperLimitAge(),
-				FILTER_WITH_AGE, LOWER_AGE_PARAMETER, UPPER_AGE_PARAMETER);
-		selectSql = getRangeSql( selectSql,
-				filterDTO.getLowerLimitHeight(),
+		selectSql = getRangeSql(selectSql, filterDTO.getLowerLimitAge(),
+				filterDTO.getUpperLimitAge(), FILTER_WITH_AGE,
+				LOWER_AGE_PARAMETER, UPPER_AGE_PARAMETER);
+		selectSql = getRangeSql(selectSql, filterDTO.getLowerLimitHeight(),
 				filterDTO.getUpperLimitHeight(), FILTER_WITH_HEIGHT,
 				LOWER_HEIGHT_PARAMETER, UPPER_HEIGHT_PARAMETER);
 		return selectSql;
 	}
 
-	private String getRangeSql( String selectSql,
-			String lowerLimit, String upperLimit, String rangeFilterSql,
+	private String getRangeSql(String selectSql, String lowerLimit,
+			String upperLimit, String rangeFilterSql,
 			String lowerLimitParameter, String upperLimitParameter) {
 
 		if (lowerLimit != null) {
