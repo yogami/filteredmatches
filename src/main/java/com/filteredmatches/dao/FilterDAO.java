@@ -14,14 +14,13 @@ import com.filteredmatches.dto.FilterDTO;
 import com.filteredmatches.dto.MatchDTO;
 import com.filteredmatches.model.User;
 
-
 @Repository("filterData")
 public class FilterDAO extends BaseDAO implements IFilterDAO {
 
 	@Autowired
 	@Qualifier("filtermatchesSqlCreator")
 	private FilterMatchesSqlCreator filterMatchesSqlCreator;
-	
+
 	public List<MatchDTO> retrieveMatchesForCurrentUser(User currentUser,
 			FilterDTO filterDTO) throws Exception {
 
@@ -35,13 +34,15 @@ public class FilterDAO extends BaseDAO implements IFilterDAO {
 			throws SQLException {
 		List<MatchDTO> users = new ArrayList<MatchDTO>();
 
-		PreparedStatement ps = con.prepareStatement(selectSql);
+		try (PreparedStatement ps = con.prepareStatement(selectSql)) {
 
-		ResultSet rs = ps.executeQuery();
+			try (ResultSet rs = ps.executeQuery()) {
 
-		while (rs.next()) {
-			MatchDTO match = populateMatch(rs);
-			users.add(match);
+				while (rs.next()) {
+					MatchDTO match = populateMatch(rs);
+					users.add(match);
+				}
+			}
 		}
 
 		return users;

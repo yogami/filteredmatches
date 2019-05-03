@@ -11,10 +11,12 @@ import com.filteredmatches.model.Users;
 import com.google.gson.Gson;
 
 @Component("readJson")
-public class ReadJsonDAO implements IReadSourceDAO{
-	
-	//TODO: the file name is hard coded here. It should be passed to this class from elsewhere so that 
-	//so that this class becomes rusable and is not bound to a particular json file.
+public class ReadJsonDAO implements IReadSourceDAO {
+
+	// TODO: the file name is hard coded here. It should be passed to this class
+	// from elsewhere so that
+	// so that this class becomes rusable and is not bound to a particular json
+	// file.
 	private static final String JSON_FILE_NAME = "users.json";
 	public List<User> getUserListFromSpecifiedSource() throws Exception {
 
@@ -25,14 +27,14 @@ public class ReadJsonDAO implements IReadSourceDAO{
 
 		File file = new File(classLoader.getResource(JSON_FILE_NAME).getFile());
 
-		Scanner scanner = new Scanner(file);
+		try (Scanner scanner = new Scanner(file)) {
 
-		while (scanner.hasNextLine()) {
-			String line = scanner.nextLine();
-			result.append(line).append("\n");
+			while (scanner.hasNextLine()) {
+				String line = scanner.nextLine();
+				result.append(line).append("\n");
+			}
+
 		}
-
-		scanner.close();
 
 		return parseJsonIntoMatchObjects(result.toString());
 

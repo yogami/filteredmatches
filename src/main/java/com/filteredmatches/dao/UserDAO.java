@@ -11,25 +11,26 @@ import com.filteredmatches.model.User;
 
 @Repository("userData")
 public class UserDAO extends BaseDAO implements IUserDAO {
-	
+
 	private static final String SELECT_CURRENT_USER_SQL = "SELECT * FROM USERS WHERE ID = ?";
-	
-	
 
 	public User retrieveCurrentuser(Integer userId) throws SQLException {
 		String selectSql = SELECT_CURRENT_USER_SQL;
 		User currentUser = null;
-        PreparedStatement ps = con.prepareStatement(selectSql);
-		ps.setInt(1, userId);
-		ResultSet rs = ps.executeQuery();
-		while (rs.next()) {
-			currentUser = populateUser(rs);
 
+		try (PreparedStatement ps = con.prepareStatement(selectSql)) {
+			ps.setInt(1, userId);
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					currentUser = populateUser(rs);
+
+				}
+			}
 		}
 
 		return currentUser;
 	}
-	
+
 	private User populateUser(ResultSet rs) throws SQLException {
 		User user = new User();
 		user.setUserId(rs.getInt(1));

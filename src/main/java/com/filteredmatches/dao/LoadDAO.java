@@ -28,8 +28,6 @@ public class LoadDAO extends BaseDAO implements ILoadDAO {
 	private static final String SELECT_ALL_USERS_SQL = "SELECT * FROM  USERS";
 
 	private static final String DROP_TABLE_USERS = "DROP TABLE USERS";
-	
-	
 
 	@Autowired
 	@Qualifier("readJson")
@@ -47,20 +45,21 @@ public class LoadDAO extends BaseDAO implements ILoadDAO {
 
 	private boolean createDDL() throws Exception {
 
-		Statement st = con.createStatement();
-		
-		
-		try {
-			 st.executeQuery(SELECT_ALL_USERS_SQL);
-			 return false;
-		} catch (Exception ex) {
-			 //table doesn't exist so go ahead and create below
-		}
-		st.executeUpdate(CREATE_TABLE_SQL);
+		try (Statement st = con.createStatement()) {
 
-		ResultSet rs  = st.executeQuery(SELECT_ALL_USERS_SQL);
-		ResultSetMetaData rsmd = rs.getMetaData();
-		return rsmd.getColumnCount() > 1;
+			try {
+				st.executeQuery(SELECT_ALL_USERS_SQL);
+				return false;
+			} catch (Exception ex) {
+				// table doesn't exist so go ahead and create below
+			}
+			st.executeUpdate(CREATE_TABLE_SQL);
+
+			try (ResultSet rs = st.executeQuery(SELECT_ALL_USERS_SQL)) {
+				ResultSetMetaData rsmd = rs.getMetaData();
+				return rsmd.getColumnCount() > 1;
+			}
+		}
 
 	}
 
